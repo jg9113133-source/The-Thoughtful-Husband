@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>The Thoughtful Husband</title>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Thoughtful"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#1a6b5a"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231a6b5a'/%3E%3Cpath d='M90 130 C90 130 40 95 40 65 C40 48 53 38 65 38 C75 38 83 44 90 52 C97 44 105 38 115 38 C127 38 140 48 140 65 C140 95 90 130 90 130Z' fill='white'/%3E%3C/svg%3E"/>
+<style>
+#splash{position:fixed;inset:0;z-index:9999;background:#1a6b5a;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s ease;}
+#splash svg{width:72px;height:72px;margin-bottom:16px;}
+#splash h1{color:white;font-size:22px;font-weight:700;font-family:-apple-system,sans-serif;letter-spacing:-.3px;}
+#splash p{color:rgba(255,255,255,0.65);font-size:13px;margin-top:6px;font-family:-apple-system,sans-serif;}
+#splash.gone{opacity:0;pointer-events:none;}
+#lock-screen{position:fixed;inset:0;z-index:8888;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:2rem;text-align:center;}
+#lock-screen.hidden{display:none;}
+</style>
+<style>
+:root{
+  --bg:#f5faf8;--surface:#fff;--border:#d8eee8;--border2:#c4ddd5;
+  --text:#1a2e28;--muted:#6b8f85;--muted2:#4a7068;--sub:#eaf4f0;
+  --pink:#1a6b5a;--pink-bg:#e6f5f1;--pink-border:#8ecebe;--pink-text:#0d4a3c;
+  --green:#1e7a3c;--green-bg:#e6f4ec;--green-border:#7ecb9a;--green-text:#0d4a22;
+  --blue:#1a5fa0;--blue-bg:#e6f0fb;--blue-border:#8ab8e8;--blue-text:#0d3d6e;
+  --purple:#6a3faa;--purple-bg:#f3eeff;--purple-border:#c9b4f0;--purple-text:#4a2880;
+  --amber:#b86e00;--amber-bg:#fff3e0;--amber-border:#f5c060;--amber-text:#7a4400;
+  --warn-bg:#fff8e6;--warn-border:#f5c060;--warn-text:#7a4400;
+  --red-bg:#fde8e8;--red-border:#f0a0a0;--red-text:#8b1a1a;
+  --period:#d0ece5;--period-t:#0d4a3c;--period-b:#8ecebe;
+  --endday:#d4ecd8;--endday-t:#0d4a22;--endday-b:#7ecb9a;
+  --avatar-colors:#e6f0fb,#e6f5f1,#f3eeff,#e6f4ec,#fff3e0,#fde8e8;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0a1210;--surface:#141f1c;--border:#1e3028;--border2:#2a4038;
+  --text:#d4ede8;--muted:#6a9e94;--muted2:#8abdb5;--sub:#1a2e28;
+  --pink:#3abf9a;--pink-bg:#0d2820;--pink-border:#1e5a48;--pink-text:#7adfc8;
+  --green:#3abf6a;--green-bg:#0d2818;--green-border:#1e5a30;--green-text:#7adf9a;
+  --blue:#4a9edd;--blue-bg:#0d2137;--blue-border:#1a4a7a;--blue-text:#7ab8f5;
+  --purple:#9a70dd;--purple-bg:#1e1030;--purple-border:#5a3a8a;--purple-text:#c9a4f0;
+  --amber:#f0a030;--amber-bg:#2a1a00;--amber-border:#7a5000;--amber-text:#f5c060;
+  --warn-bg:#2a1a00;--warn-border:#7a5000;--warn-text:#f5c060;
+  --red-bg:#2a0a0a;--red-border:#7a2020;--red-text:#f5a0a0;
+  --period:#0d2820;--period-t:#7adfc8;--period-b:#1e5a48;
+  --endday:#0d2818;--endday-t:#7adf9a;--endday-b:#1e5a30;
+}}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);padding:1rem;padding-top:calc(1rem + env(safe-area-inset-top));padding-bottom:calc(2rem + env(safe-area-inset-bottom));min-height:100vh;}
+.app{max-width:680px;margin:0 auto;}
+.app-header{margin-bottom:1.25rem;}
+.app-title{font-size:22px;font-weight:700;color:var(--pink);letter-spacing:-.3px;}
+.app-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:1.25rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:9px 13px;font-size:12px;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+.tab.on{color:var(--pink);border-bottom-color:var(--pink);font-weight:600;}
+.pane{display:none;}.pane.on{display:block;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1rem;}
+.ct{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;}
+.banner{border-radius:14px;padding:1.25rem;margin-bottom:1rem;border:1px solid var(--border);background:var(--sub);}
+.banner.info{background:var(--blue-bg);border-color:var(--blue-border);}
+.banner.warn{background:var(--warn-bg);border-color:var(--warn-border);}
+.banner.pink{background:var(--pink-bg);border-color:var(--pink-border);}
+.banner.purple{background:var(--purple-bg);border-color:var(--purple-border);}
+label{font-size:14px;color:var(--muted2);display:block;margin-bottom:4px;}
+input,select,textarea{width:100%;margin-bottom:12px;font-family:inherit;padding:9px 11px;border:1px solid var(--border2);border-radius:9px;font-size:14px;background:var(--surface);color:var(--text);}
+textarea{height:72px;resize:vertical;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);}
+.btn{padding:9px 18px;border-radius:9px;font-size:14px;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text);font-family:inherit;}
+.btn:active{opacity:.75;}
+.btn.pk{background:var(--pink);color:#fff;border-color:var(--pink);}
+.btn.gr{background:var(--green);color:#fff;border-color:var(--green);width:100%;padding:13px;font-size:15px;margin-top:8px;}
+.btn.bl{background:var(--text);color:var(--bg);border-color:var(--text);}
+.btn.pu{background:var(--purple);color:#fff;border-color:var(--purple);}
+.btn.sm{font-size:12px;padding:5px 11px;}
+.btn.full{width:100%;margin-top:6px;}
+.row{display:flex;gap:10px;align-items:flex-end;}.row>*{flex:1;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1rem;}
+.met{background:var(--sub);border-radius:10px;padding:1rem;}
+.mv{font-size:20px;font-weight:600;}
+.ml{font-size:12px;color:var(--muted);margin-top:2px;}
+.dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;}
+.dot{width:26px;height:26px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px solid var(--border);flex-shrink:0;}
+.dot.p{background:var(--period);color:var(--period-t);border-color:var(--period-b);}
+.dot.e{background:var(--endday);color:var(--endday-t);border-color:var(--endday-b);}
+.dot.pr{background:var(--pink-bg);color:var(--pink-text);border-color:var(--pink-border);border-style:dashed;}
+.dot.td{border:2px solid var(--pink);font-weight:700;}
+.pb{background:var(--sub);border-radius:8px;height:8px;margin:8px 0 4px;overflow:hidden;}
+.pf{height:8px;border-radius:8px;background:var(--pink);transition:width .4s;}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;margin-left:6px;font-weight:500;}
+.badge.amber{background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border);}
+.badge.green{background:var(--green-bg);color:var(--green-text);border:1px solid var(--green-border);}
+.badge.pink{background:var(--pink-bg);color:var(--pink-text);border:1px solid var(--pink-border);}
+.badge.purple{background:var(--purple-bg);color:var(--purple-text);border:1px solid var(--purple-border);}
+.toast{border-radius:9px;padding:10px 14px;font-size:13px;margin-top:8px;display:none;}
+.toast.ok{color:var(--green-text);background:var(--green-bg);border:1px solid var(--green-border);}
+.toast.err{background:var(--red-bg);color:var(--red-text);border:1px solid var(--red-border);}
+.ebox{background:var(--sub);border-radius:9px;padding:1rem;font-size:13px;line-height:1.9;color:var(--text);white-space:pre-wrap;font-family:monospace;min-height:80px;}
+.le{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.le:last-child{border-bottom:none;}
+.hint{font-size:12px;color:var(--muted);margin-top:-8px;margin-bottom:12px;}
+.tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;margin:3px;border:1px solid var(--border2);color:var(--muted);background:var(--sub);}
+.tag.on{background:var(--pink-bg);color:var(--pink-text);border-color:var(--pink-border);}
+.tag.pu{background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border);}
+.sug-box{background:var(--pink-bg);border:1px solid var(--pink-border);border-radius:14px;padding:1.25rem;margin-bottom:1rem;}
+.day-pill{display:inline-block;background:var(--pink);color:#fff;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;margin-bottom:10px;}
+.chk-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.chk-row:last-child{border-bottom:none;}
+.chk-row input[type=checkbox]{width:18px;height:18px;margin:0;flex-shrink:0;accent-color:var(--pink);}
+.chk-row.done span{text-decoration:line-through;color:var(--muted);}
+.sw-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.sw-row:last-child{border-bottom:none;}
+.sw-row span{font-size:14px;}
+.sw{position:relative;display:inline-block;width:44px;height:26px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;}
+.sl{position:absolute;cursor:pointer;inset:0;background:var(--border2);border-radius:26px;transition:.3s;}
+.sl:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+input:checked+.sl{background:var(--pink);}
+input:checked+.sl:before{transform:translateX(18px);}
+
+/* Home Dashboard */
+.home-greeting{font-size:24px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;}
+.home-date{font-size:13px;color:var(--muted);margin-bottom:1.25rem;}
+.nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem;}
+.nav-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem;cursor:pointer;transition:border-color .2s,box-shadow .15s;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;}
+.nav-card:active{opacity:.8;}
+.nav-card-icon{font-size:26px;line-height:1;}
+.nav-card-label{font-size:13px;font-weight:600;color:var(--text);}
+.nav-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+.nav-card-badge{position:absolute;top:10px;right:10px;background:var(--pink);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:2px 7px;min-width:18px;text-align:center;}
+.nav-card.teal{background:linear-gradient(135deg,var(--pink-bg) 0%,var(--surface) 100%);border-color:var(--pink-border);}
+.nav-card.blue{background:linear-gradient(135deg,var(--blue-bg) 0%,var(--surface) 100%);border-color:var(--blue-border);}
+.nav-card.purple{background:linear-gradient(135deg,var(--purple-bg) 0%,var(--surface) 100%);border-color:var(--purple-border);}
+.nav-card.green{background:linear-gradient(135deg,var(--green-bg) 0%,var(--surface) 100%);border-color:var(--green-border);}
+.nav-card.amber{background:linear-gradient(135deg,var(--amber-bg) 0%,var(--surface) 100%);border-color:var(--amber-border);}
+.nav-card.gray{background:var(--sub);border-color:var(--border);}
+.event-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.event-row:last-child{border-bottom:none;}
+.event-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.event-label{font-size:14px;font-weight:500;color:var(--text);}
+.event-sub{font-size:12px;color:var(--muted);margin-top:1px;}
+.status-bar{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.status-chip{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;}
+.status-chip:active{opacity:.75;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* Calendar grid */
+.cal-wrap{overflow:hidden;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.cal-nav-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:4px 12px;cursor:pointer;font-size:16px;color:var(--text);}
+.cal-month-label{font-size:15px;font-weight:600;color:var(--text);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-dow{font-size:10px;font-weight:600;color:var(--muted);text-align:center;padding:4px 0;text-transform:uppercase;}
+.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:border-color .15s;color:var(--text);position:relative;}
+.cal-cell:hover{border-color:var(--border2);}
+.cal-cell.empty{cursor:default;}
+.cal-cell.td{border:2px solid var(--pink);font-weight:700;}
+.cal-cell.actual{background:var(--period);color:var(--period-t);border-color:var(--period-b);}
+.cal-cell.actual-end{background:var(--endday);color:var(--endday-t);border-color:var(--endday-b);}
+.cal-cell.predicted{background:var(--pink-bg);color:var(--pink-text);border:1px dashed var(--pink-border);}
+.cal-cell.predicted-end{background:var(--green-bg);color:var(--green-text);border:1px dashed var(--green-border);}
+.cal-cell.selected{outline:2px solid var(--blue);outline-offset:1px;}
+.cal-key{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.cal-key-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);}
+.cal-key-swatch{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+.day-detail{background:var(--sub);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-top:10px;}
+.day-detail-date{font-size:15px;font-weight:600;margin-bottom:8px;}
+.day-detail-info{font-size:13px;color:var(--muted2);margin-bottom:10px;line-height:1.6;}
+
+/* My People */
+.person-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:.875rem;cursor:pointer;transition:border-color .2s;}
+.person-card:hover{border-color:var(--purple-border);}
+.person-card.expanded{border-color:var(--purple-border);background:var(--purple-bg);}
+.person-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;}
+.person-header{display:flex;align-items:center;gap:12px;}
+.person-name{font-size:16px;font-weight:600;}
+.person-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+.person-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--purple-border);}
+.person-body.show{display:block;}
+.upcoming-event{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.upcoming-event:last-child{border-bottom:none;}
+.days-chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.days-chip.soon{background:var(--pink-bg);color:var(--pink-text);border:1px solid var(--pink-border);}
+.days-chip.upcoming{background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border);}
+.days-chip.far{background:var(--sub);color:var(--muted);border:1px solid var(--border);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:flex-end;justify-content:center;}
+.modal-overlay.hidden{display:none;}
+.modal{background:var(--surface);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:680px;max-height:85vh;overflow-y:auto;padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;}
+.close-btn{font-size:22px;cursor:pointer;color:var(--muted);background:none;border:none;line-height:1;}
+.section-divider{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-top:14px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <svg viewBox="0 0 100 100"><path d="M50 80 C50 80 15 58 15 35 C15 22 24 14 34 14 C41 14 47 18 50 24 C53 18 59 14 66 14 C76 14 85 22 85 35 C85 58 50 80 50 80Z" fill="white"/></svg>
+  <h1>The Thoughtful Husband</h1>
+  <p>Loading your app...</p>
+</div>
+
+<div id="lock-screen" class="hidden">
+  <svg viewBox="0 0 100 100" width="60" height="60" style="margin-bottom:16px;"><path d="M50 80 C50 80 15 58 15 35 C15 22 24 14 34 14 C41 14 47 18 50 24 C53 18 59 14 66 14 C76 14 85 22 85 35 C85 58 50 80 50 80Z" fill="var(--pink)"/></svg>
+  <div style="font-size:20px;font-weight:700;margin-bottom:6px;color:var(--pink);">The Thoughtful Husband</div>
+  <div style="font-size:14px;color:var(--muted);margin-bottom:22px;">Enter your passcode to unlock</div>
+  <input type="password" id="lock-input" maxlength="8" placeholder="••••" style="max-width:180px;text-align:center;font-size:22px;letter-spacing:8px;" onkeydown="if(event.key==='Enter')tryUnlock()"/>
+  <button class="btn pk" onclick="tryUnlock()" style="margin-top:4px;width:180px;">Unlock</button>
+  <div class="toast err" id="lock-err" style="max-width:200px;">Incorrect passcode</div>
+</div>
+
+<!-- PERSON MODAL -->
+<div class="modal-overlay hidden" id="person-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modal-title-text">Add person</span>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+    <label>Name</label>
+    <input type="text" id="p-name" placeholder="e.g. Mom, Emma, Jake"/>
+    <label>Relationship</label>
+    <select id="p-rel">
+      <option value="wife">Wife / Partner</option>
+      <option value="child">Child</option>
+      <option value="parent">Parent</option>
+      <option value="sibling">Sibling</option>
+      <option value="friend">Friend</option>
+      <option value="other">Other</option>
+    </select>
+    <label>Emoji (for their avatar)</label>
+    <input type="text" id="p-emoji" placeholder="e.g. 👩 👦 🧑" maxlength="4" style="width:80px;font-size:22px;text-align:center;"/>
+
+    <div class="section-divider">Yearly dates</div>
+    <div id="p-dates-list"></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+      <input type="text" id="new-date-label" placeholder="e.g. Birthday, Anniversary" style="flex:1;margin:0;"/>
+      <input type="date" id="new-date-val" style="flex:1;margin:0;"/>
+      <button class="btn sm pk" onclick="addDateField()" style="flex-shrink:0;">Add</button>
+    </div>
+
+    <div class="section-divider">Favorite foods &amp; drinks</div>
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <input type="text" id="p-foods-inp" placeholder="e.g. Sushi, Diet Coke — press Enter" style="flex:1;margin:0;" onkeydown="addPersonCat(event,'foods')"/>
+      <button class="btn pk sm" onclick="addPersonCatBtn('foods')">Add</button>
+    </div>
+    <div id="p-foods-tags" style="margin-bottom:6px;"></div>
+
+    <div class="section-divider">Hobbies &amp; interests</div>
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <input type="text" id="p-hobbies-inp" placeholder="e.g. Gardening, Reading — press Enter" style="flex:1;margin:0;" onkeydown="addPersonCat(event,'hobbies')"/>
+      <button class="btn pk sm" onclick="addPersonCatBtn('hobbies')">Add</button>
+    </div>
+    <div id="p-hobbies-tags" style="margin-bottom:6px;"></div>
+
+    <div class="section-divider">Gift ideas</div>
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <input type="text" id="p-gifts-inp" placeholder="e.g. Spa day, Book voucher — press Enter" style="flex:1;margin:0;" onkeydown="addPersonCat(event,'gifts')"/>
+      <button class="btn pk sm" onclick="addPersonCatBtn('gifts')">Add</button>
+    </div>
+    <div id="p-gifts-tags" style="margin-bottom:6px;"></div>
+
+    <div class="section-divider">Things they like / favorites</div>
+    <div style="display:flex;gap:6px;margin-bottom:6px;">
+      <input type="text" id="p-likes-inp" placeholder="Anything else — fav color, shows, etc." style="flex:1;margin:0;" onkeydown="addPersonLike(event)"/>
+      <button class="btn pk sm" onclick="addPersonLikeBtn()">Add</button>
+    </div>
+    <div id="p-likes-tags" style="margin-bottom:6px;"></div>
+
+    <div class="section-divider">Sizes &amp; practical info</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div><label style="font-size:12px;">Clothing size</label><input type="text" id="p-size-clothing" placeholder="e.g. M, 8, 10"/></div>
+      <div><label style="font-size:12px;">Shoe size</label><input type="text" id="p-size-shoe" placeholder="e.g. 7, 9.5"/></div>
+    </div>
+
+    <div class="section-divider">Notes &amp; reminders</div>
+    <textarea id="p-notes" placeholder="Anything important to remember — allergies, preferences, things that went well, things to avoid..."></textarea>
+
+    <div style="display:flex;gap:8px;margin-top:6px;">
+      <button class="btn pu full" onclick="savePerson()">Save</button>
+      <button class="btn full" id="del-person-btn" onclick="deletePerson()" style="color:var(--red-text);border-color:var(--red-border);display:none;">Delete</button>
+    </div>
+    <div class="toast ok" id="t-person">Saved!</div>
+  </div>
+</div>
+
+<div class="app" id="main-app">
+<div class="app-header">
+  <div class="app-title">💚 The Thoughtful Husband</div>
+  <div class="app-sub">Your personal care companion</div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="go('home',this)">Home</button>
+  <button class="tab" onclick="go('db',this)">Cycle</button>
+  <button class="tab" onclick="go('log',this)">Log period</button>
+  <button class="tab" onclick="go('today',this)">Today</button>
+  <button class="tab" onclick="go('people',this)">My People</button>
+  <button class="tab" onclick="go('upcoming',this)">Upcoming</button>
+  <button class="tab" onclick="go('care',this)">Care notes</button>
+  <button class="tab" onclick="go('shop',this)">Checklist</button>
+  <button class="tab" onclick="go('email',this)">Email</button>
+  <button class="tab" onclick="go('hist',this)">History</button>
+  <button class="tab" onclick="go('settings',this)">Settings</button>
+</div>
+
+<!-- HOME DASHBOARD -->
+<div id="pane-home" class="pane on">
+  <div class="home-greeting" id="home-greeting">Good morning 👋</div>
+  <div class="home-date" id="home-date"></div>
+
+  <!-- Status bar -->
+  <div class="status-bar" id="home-status-bar"></div>
+
+  <!-- Upcoming events notice -->
+  <div id="home-events-section" style="display:none;margin-bottom:1.25rem;">
+    <div class="card" style="padding:1rem 1.25rem;">
+      <div class="ct">Coming up soon</div>
+      <div id="home-events-list"></div>
+    </div>
+  </div>
+
+  <!-- Navigation grid -->
+  <div class="nav-grid">
+    <div class="nav-card teal" onclick="go('db',null)">
+      <div class="nav-card-icon">🗓️</div>
+      <div class="nav-card-label">Cycle tracker</div>
+      <div class="nav-card-sub" id="nc-cycle">Calendar & predictions</div>
+    </div>
+    <div class="nav-card blue" onclick="go('today',null)">
+      <div class="nav-card-icon">💡</div>
+      <div class="nav-card-label">Today</div>
+      <div class="nav-card-sub" id="nc-today">Daily suggestions</div>
+    </div>
+    <div class="nav-card purple" onclick="go('people',null)">
+      <div class="nav-card-icon">👨‍👩‍👧</div>
+      <div class="nav-card-label">My People</div>
+      <div class="nav-card-sub" id="nc-people">Family & friends</div>
+      <div class="nav-card-badge" id="nc-people-badge" style="display:none;"></div>
+    </div>
+    <div class="nav-card amber" onclick="go('upcoming',null)">
+      <div class="nav-card-icon">🎂</div>
+      <div class="nav-card-label">Upcoming</div>
+      <div class="nav-card-sub" id="nc-upcoming">Dates & reminders</div>
+      <div class="nav-card-badge" id="nc-upcoming-badge" style="display:none;background:#b86e00;"></div>
+    </div>
+    <div class="nav-card green" onclick="go('shop',null)">
+      <div class="nav-card-icon">🛒</div>
+      <div class="nav-card-label">Checklist</div>
+      <div class="nav-card-sub" id="nc-shop">Shopping list</div>
+    </div>
+    <div class="nav-card teal" onclick="go('care',null)">
+      <div class="nav-card-icon">❤️</div>
+      <div class="nav-card-label">Care notes</div>
+      <div class="nav-card-sub">Her preferences</div>
+    </div>
+    <div class="nav-card blue" onclick="go('email',null)">
+      <div class="nav-card-icon">📧</div>
+      <div class="nav-card-label">Email reminders</div>
+      <div class="nav-card-sub" id="nc-email">Auto-send settings</div>
+    </div>
+    <div class="nav-card gray" onclick="go('settings',null)">
+      <div class="nav-card-icon">⚙️</div>
+      <div class="nav-card-label">Settings</div>
+      <div class="nav-card-sub">Backup, passcode</div>
+    </div>
+  </div>
+
+  <!-- Quick log -->
+  <div class="card">
+    <div class="ct">Quick actions</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn pk" onclick="go('log',null)">+ Log period</button>
+      <button class="btn" onclick="go('hist',null)">History</button>
+      <button class="btn" onclick="go('people',null);setTimeout(()=>openModal(),100)">+ Add person</button>
+    </div>
+  </div>
+</div>
+
+<!-- CYCLE DASHBOARD -->
+<div id="pane-db" class="pane">
+  <div id="db-empty" style="display:none;"><div class="banner"><div style="font-size:22px;font-weight:500;">—</div><div style="font-size:13px;color:var(--muted);margin-top:4px;">Log a period start and end date to begin tracking</div></div></div>
+  <div id="db-learn" style="display:none;"><div class="banner info">
+    <div style="font-size:15px;font-weight:600;color:var(--blue-text);margin-bottom:6px;">Building predictions <span class="badge amber" id="cyc-badge">0 cycles</span></div>
+    <div style="font-size:13px;color:var(--blue-text);">Log start + end of each period. Predictions improve with every cycle logged.</div>
+    <div class="pb"><div class="pf" id="pbar" style="width:0%"></div></div>
+    <div style="font-size:12px;color:var(--blue-text);" id="learn-sub"></div>
+  </div></div>
+  <div id="db-period" style="display:none;">
+    <div class="sug-box">
+      <div class="day-pill" id="db-day-pill">Day 1</div>
+      <div style="font-size:15px;font-weight:600;color:var(--pink-text);margin-bottom:4px;">Her period is active</div>
+      <div style="font-size:13px;color:var(--pink-text);opacity:.8;margin-bottom:10px;" id="db-days-left"></div>
+      <div style="font-size:13px;color:var(--pink-text);font-style:italic;line-height:1.6;" id="db-sug"></div>
+    </div>
+  </div>
+  <div id="db-ready" style="display:none;"><div class="banner pink">
+    <div style="font-size:15px;font-weight:600;color:var(--pink-text);margin-bottom:4px;">Predictions ready <span class="badge green">Emails unlocked</span></div>
+    <div style="font-size:13px;color:var(--pink-text);" id="pred-desc"></div>
+  </div>
+  <div id="confirm-box" style="display:none;" class="card">
+    <div class="ct">Period confirmation</div>
+    <div style="font-size:14px;color:var(--muted2);margin-bottom:10px;" id="conf-msg"></div>
+    <button class="btn gr" onclick="confirmToday()">✓ Confirm — her period started today</button>
+  </div></div>
+  <div id="db-upcoming-alert" style="display:none;margin-bottom:1rem;"></div>
+  <div class="g3">
+    <div class="met"><div class="mv" id="m-cyc">—</div><div class="ml">Avg cycle</div></div>
+    <div class="met"><div class="mv" id="m-dur">—</div><div class="ml">Avg period</div></div>
+    <div class="met"><div class="mv" id="m-cnt">0</div><div class="ml">Cycles logged</div></div>
+  </div>
+  <div class="card" style="overflow:visible;">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calNav(-1)">‹</button>
+      <div class="cal-month-label" id="cal-month-label"></div>
+      <button class="cal-nav-btn" onclick="calNav(1)">›</button>
+    </div>
+    <div class="cal-grid" id="cal-dow-row" style="margin-bottom:3px;"></div>
+    <div class="cal-grid" id="cal"></div>
+    <div class="cal-key">
+      <div class="cal-key-item"><div class="cal-key-swatch" style="background:var(--period);border:1px solid var(--period-b);"></div>Actual period</div>
+      <div class="cal-key-item"><div class="cal-key-swatch" style="background:var(--endday);border:1px solid var(--endday-b);"></div>Period end</div>
+      <div class="cal-key-item"><div class="cal-key-swatch" style="background:var(--pink-bg);border:1px dashed var(--pink-border);border-radius:3px;"></div>Predicted</div>
+      <div class="cal-key-item"><div class="cal-key-swatch" style="background:var(--green-bg);border:1px dashed var(--green-border);border-radius:3px;"></div>Predicted end</div>
+    </div>
+  </div>
+  <div class="day-detail" id="day-detail" style="display:none;margin-bottom:1rem;">
+    <div class="day-detail-date" id="day-detail-date"></div>
+    <div class="day-detail-info" id="day-detail-info" style="margin:6px 0 10px;font-size:13px;color:var(--muted2);line-height:1.6;"></div>
+    <div id="day-detail-actions"></div>
+  </div>
+</div>
+
+<!-- LOG (hidden pane, linked from Cycle tab) -->
+<div id="pane-log" class="pane">
+  <div class="card">
+    <div class="ct">Log a period</div>
+    <div style="font-size:13px;color:var(--muted2);margin-bottom:14px;">Log both start and end. Emails unlock after your first complete cycle — predictions improve with every cycle logged.</div>
+    <label>Start date</label><input type="date" id="ls"/>
+    <label>End date</label><input type="date" id="le"/>
+    <div class="hint">Leave end blank if still ongoing — add it later from History.</div>
+    <label>Notes (optional)</label><textarea id="ln" placeholder="Flow, symptoms, mood..."></textarea>
+    <button class="btn pk" onclick="logPeriod()">Save period log</button>
+    <div class="toast ok" id="t-log">Period logged!</div>
+  </div>
+</div>
+
+<!-- TODAY -->
+<div id="pane-today" class="pane">
+  <div id="today-none" style="display:none;" class="banner">
+    <div style="font-size:15px;font-weight:600;">No active period</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:4px;">Confirm her period has started from the Cycle tab to activate daily suggestions.</div>
+  </div>
+  <div id="today-active" style="display:none;">
+    <div class="sug-box">
+      <div class="day-pill" id="today-pill">Day 1</div>
+      <div style="font-size:18px;font-weight:700;color:var(--pink-text);margin-bottom:4px;" id="today-heading">Day 1 of her period</div>
+      <div style="font-size:13px;color:var(--pink-text);opacity:.8;margin-bottom:14px;" id="today-sub"></div>
+      <div style="font-size:14px;color:var(--pink-text);line-height:1.7;" id="today-sug">Loading a suggestion...</div>
+    </div>
+    <div id="priv-box" style="display:none;" class="card">
+      <div class="ct">Your private notes</div>
+      <div style="font-size:14px;line-height:1.7;white-space:pre-wrap;" id="priv-content"></div>
+    </div>
+    <button class="btn full" onclick="fetchSuggestion()">Different suggestion ↺</button>
+    <div style="height:8px;"></div>
+    <button class="btn pk full" onclick="endPeriodToday()">Mark period as ended today</button>
+  </div>
+</div>
+
+<!-- MY PEOPLE -->
+<div id="pane-people" class="pane">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div style="font-size:16px;font-weight:600;">My People</div>
+    <button class="btn pu sm" onclick="openModal()">+ Add person</button>
+  </div>
+  <div id="people-list"></div>
+  <div id="people-empty" style="display:none;" class="banner purple">
+    <div style="font-size:15px;font-weight:600;color:var(--purple-text);">No people added yet</div>
+    <div style="font-size:13px;color:var(--purple-text);margin-top:4px;">Add family members and friends to track their birthdays, anniversaries, and what they love.</div>
+  </div>
+</div>
+
+<!-- UPCOMING DATES -->
+<div id="pane-upcoming" class="pane">
+  <div style="font-size:16px;font-weight:600;margin-bottom:1rem;">Upcoming dates</div>
+  <div id="upcoming-list"></div>
+  <div id="upcoming-empty" style="display:none;" class="banner">
+    <div style="font-size:14px;color:var(--muted);">No upcoming dates. Add people and their yearly dates in the My People tab.</div>
+  </div>
+</div>
+
+<!-- CARE NOTES -->
+<div id="pane-care" class="pane">
+
+  <div class="card">
+    <div class="ct">Tampon preferences</div>
+    <div id="tampon-list"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+      <input type="text" id="t-brand-new" placeholder="Brand (e.g. Tampax)" style="flex:1;margin:0;min-width:100px;"/>
+      <select id="t-size-new" style="flex:1;margin:0;min-width:100px;">
+        <option value="">Size...</option>
+        <option>Light</option><option>Regular</option><option>Super</option><option>Super Plus</option><option>Ultra</option>
+      </select>
+      <button class="btn pk sm" onclick="addTampon()">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Coffee orders</div>
+    <div id="coffee-list"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <input type="text" id="coff-new" placeholder="e.g. Oat milk latte, extra shot" style="flex:1;margin:0;" onkeydown="if(event.key==='Enter')addCoffee()"/>
+      <button class="btn pk sm" onclick="addCoffee()">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Favorite foods</div>
+    <div id="ftags"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <input type="text" id="fi" placeholder="Type a food and press Enter" style="flex:1;margin:0;" onkeydown="addTag(event,'food')"/>
+      <button class="btn pk sm" onclick="addTagBtn('food')">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Nice things to do</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">These rotate as daily suggestions during her period</div>
+    <div id="ntags"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <input type="text" id="ni" placeholder="Type an idea and press Enter" style="flex:1;margin:0;" onkeydown="addTag(event,'nice')"/>
+      <button class="btn pk sm" onclick="addTagBtn('nice')">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Other notes</div>
+    <textarea id="onotes" placeholder="Anything else to remember..."></textarea>
+    <button class="btn sm" style="color:var(--red-text);border-color:var(--red-border);" onclick="if(confirm('Clear other notes?')){S.otherNotes='';save();document.getElementById('onotes').value='';}">Clear notes</button>
+  </div>
+
+  <div class="card">
+    <div class="ct">Private notes (just for you)</div>
+    <textarea id="privnotes" style="height:100px;" placeholder="Things she appreciated, things to avoid — only visible in the app."></textarea>
+    <button class="btn sm" style="color:var(--red-text);border-color:var(--red-border);margin-top:6px;" onclick="if(confirm('Clear private notes?')){S.privNotes='';save();document.getElementById('privnotes').value='';}">Clear notes</button>
+  </div>
+
+  <button class="btn bl" onclick="saveCare()">Save notes &amp; settings</button>
+  <div class="toast ok" id="t-care">Saved!</div>
+</div>
+
+<!-- CHECKLIST -->
+<div id="pane-shop" class="pane">
+  <div class="card">
+    <div class="ct">Shopping checklist <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);">resets each cycle</span></div>
+    <div id="shop-list"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <input type="text" id="shop-new" placeholder="Add a custom item..." style="margin:0;flex:1;" onkeydown="if(event.key==='Enter')addShopItem()"/>
+      <button class="btn pk" onclick="addShopItem()">Add</button>
+    </div>
+  </div>
+  <button class="btn full" onclick="resetChecklist()">Reset for new cycle</button>
+</div>
+
+<!-- EMAIL -->
+<div id="pane-email" class="pane">
+  <div id="e-locked" style="display:none;" class="banner warn">
+    <div style="font-weight:600;color:var(--warn-text);">Email reminders locked</div>
+    <div style="font-size:13px;color:var(--warn-text);margin-top:4px;">Complete 3 full cycles (start + end) to unlock.</div>
+  </div>
+  <div id="e-form">
+    <div class="card"><div class="ct">Settings</div>
+      <label>Your email address</label><input type="email" id="youremail" placeholder="you@example.com"/>
+      <label>Days before predicted start to send reminder</label>
+      <select id="rdays"><option value="1">1 day before</option><option value="2">2 days before</option><option value="3">3 days before</option></select>
+      <div class="sw-row" style="margin-top:8px;">
+        <span>Send mid-period check-in (day 3)</span>
+        <label class="sw"><input type="checkbox" id="mid-toggle"/><span class="sl"></span></label>
+      </div>
+      <div class="sw-row">
+        <span>Days before to send My People reminders</span>
+        <select id="people-remind-days" style="width:auto;margin:0;padding:4px 8px;font-size:13px;">
+          <option value="1">1 day</option>
+          <option value="2">2 days</option>
+          <option value="3">3 days</option>
+          <option value="5">5 days</option>
+          <option value="7">7 days</option>
+        </select>
+      </div>
+      <button class="btn bl full" onclick="saveCare()" style="margin-top:14px;">Save settings</button>
+    </div>
+    <div class="card" style="background:var(--blue-bg);border-color:var(--blue-border);">
+      <div class="ct" style="color:var(--blue-text);">Auto-send</div>
+      <div style="font-size:14px;margin-bottom:6px;">Emails send automatically when you open the app on the reminder day.</div>
+      <div style="font-size:13px;color:var(--muted);" id="auto-status"></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="last-sent-info"></div>
+    </div>
+    <div class="card" style="background:var(--purple-bg);border-color:var(--purple-border);">
+      <div class="ct" style="color:var(--purple-text);">My People reminders</div>
+      <div style="font-size:14px;margin-bottom:6px;">Auto-sends a personalized reminder email before each person's birthday, anniversary, or special date.</div>
+      <div id="people-reminder-list" style="font-size:13px;color:var(--muted);"></div>
+    </div>
+    <div class="card"><div class="ct">Email preview</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;" id="gen-status">Click Generate to write the email, then Send to deliver it.</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <button class="btn pk sm" id="gen-btn" onclick="generatePreview()">Generate email</button>
+        <button class="btn bl sm" id="send-btn" onclick="sendGeneratedEmail()" style="display:none;">Send via Gmail ↗</button>
+        <button class="btn sm" id="regen-btn" onclick="generatePreview()" style="display:none;">Regenerate ↺</button>
+      </div>
+      <div class="ebox" id="epreview" style="min-height:60px;white-space:pre-wrap;"></div>
+      <div id="api-error-detail" style="display:none;margin-top:8px;font-size:12px;color:var(--red-text);background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:8px 12px;line-height:1.5;"></div>
+    </div>
+    <div class="toast ok" id="t-sent">Email sent! Check your inbox.</div>
+    <div class="toast err" id="t-err">Send failed. Check Gmail is connected in Claude settings.</div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="pane-hist" class="pane">
+  <div class="card"><div class="ct">Period history</div>
+    <div id="hlist"><em style="color:var(--muted);font-size:14px;">No periods logged yet.</em></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="pane-settings" class="pane">
+  <div class="card"><div class="ct">Passcode lock</div>
+    <div class="sw-row">
+      <span>Require passcode on open</span>
+      <label class="sw"><input type="checkbox" id="lock-toggle" onchange="toggleLock()"/><span class="sl"></span></label>
+    </div>
+    <div id="pass-fields" style="display:none;margin-top:14px;">
+      <label>New passcode</label><input type="password" id="new-pass" placeholder="Enter passcode" maxlength="8"/>
+      <label>Confirm passcode</label><input type="password" id="conf-pass" placeholder="Confirm passcode" maxlength="8"/>
+      <button class="btn pk" onclick="savePasscode()">Save passcode</button>
+      <div class="toast ok" id="t-pass">Passcode saved!</div>
+    </div>
+  </div>
+  <div class="card"><div class="ct">Dark mode</div>
+    <div style="font-size:14px;color:var(--muted2);">Follows your iPhone's system setting automatically.</div>
+  </div>
+  <div class="card"><div class="ct">Data backup</div>
+    <div style="font-size:13px;color:var(--muted2);margin-bottom:14px;">Export all your data to a file. Import it anytime to restore.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn bl" onclick="exportData()">Export backup</button>
+      <button class="btn" onclick="document.getElementById('imp-file').click()">Import backup</button>
+      <input type="file" id="imp-file" accept=".json" style="display:none;" onchange="importData(event)"/>
+    </div>
+    <div class="toast ok" id="t-export" style="margin-top:10px;">Backup downloaded!</div>
+    <div class="toast ok" id="t-import" style="margin-top:10px;">Data imported!</div>
+    <div class="toast err" id="t-imp-err" style="margin-top:10px;">Could not read file.</div>
+  </div>
+  <div class="card" style="border-color:var(--red-border);">
+    <div class="ct" style="color:var(--red-text);">Danger zone</div>
+    <button class="btn full" style="color:var(--red-text);border-color:var(--red-border);" onclick="clearAll()">Clear all data</button>
+  </div>
+</div>
+
+</div><!-- end .app -->
+
+<script>
+let S={
+  logs:[],foods:[],niceThings:[],
+  tampons:[],coffeeOrders:[],otherNotes:'',privNotes:'',
+  yourEmail:'',remindDays:1,midPeriodEmail:false,
+  lastSentFor:'',lastMidSentFor:'',
+  shopItems:[],
+  people:[], // [{id,name,rel,emoji,dates:[{label,month,day}],likes:[],notes}]
+  passcode:'',lockEnabled:false,
+  lastSugDate:'',lastSugIdx:-1,
+  peopleRemindDays:2,
+  sentPeopleReminders:{}
+};
+let emailBody='';
+const REQ=1;
+let editingPersonId=null;
+let modalTempDates=[];
+let modalTempLikes=[];
+let modalTempFoods=[];
+let modalTempHobbies=[];
+let modalTempGifts=[];
+
+const AVATAR_COLORS=['#e8f4fd','#fdf0f5','#f3eeff','#d4edda','#fff8e6','#fde8e8'];
+const AVATAR_TEXT=['#1565a0','#7a2448','#4a2880','#1a5c2a','#7a4800','#8b1a1a'];
+const REL_EMOJI={wife:'💑',child:'👶',parent:'👨‍👩‍👧',sibling:'👫',friend:'🤝',other:'👤'};
+
+function save(){try{localStorage.setItem('th1',JSON.stringify(S));}catch(e){}}
+function load(){try{const s=localStorage.getItem('th1');if(s)S={...S,...JSON.parse(s)};}catch(e){}}
+
+// Lock
+function checkLock(){
+  if(S.lockEnabled&&S.passcode){
+    document.getElementById('lock-screen').classList.remove('hidden');
+    document.getElementById('main-app').style.display='none';
+  }
+}
+function tryUnlock(){
+  if(document.getElementById('lock-input').value===S.passcode){
+    document.getElementById('lock-screen').classList.add('hidden');
+    document.getElementById('main-app').style.display='';
+    document.getElementById('lock-input').value='';
+  } else toast('lock-err','err');
+}
+function toggleLock(){
+  const on=document.getElementById('lock-toggle').checked;
+  document.getElementById('pass-fields').style.display=on?'block':'none';
+  if(!on){S.lockEnabled=false;S.passcode='';save();}
+}
+function savePasscode(){
+  const p=document.getElementById('new-pass').value,c=document.getElementById('conf-pass').value;
+  if(!p){alert('Enter a passcode.');return;}
+  if(p!==c){alert('Passcodes do not match.');return;}
+  S.passcode=p;S.lockEnabled=true;save();toast('t-pass','ok');
+}
+
+// Core cycle
+function complete(){return S.logs.filter(l=>l.start&&l.end).length;}
+function ready(){return complete()>=REQ;}
+function avgCyc(){
+  const c=S.logs.filter(l=>l.start&&l.end).sort((a,b)=>parseLocalDate(a.start)-parseLocalDate(b.start));
+  if(c.length<2)return null;
+  let t=0;for(let i=1;i<c.length;i++)t+=(parseLocalDate(c[i].start)-parseLocalDate(c[i-1].start))/86400000;
+  return Math.round(t/(c.length-1));
+}
+function avgDur(){
+  const c=S.logs.filter(l=>l.start&&l.end);
+  if(!c.length)return null;
+  return Math.round(c.reduce((s,l)=>s+(parseLocalDate(l.end)-parseLocalDate(l.start))/86400000+1,0)/c.length);
+}
+function predNext(){
+  const c=S.logs.filter(l=>l.start&&l.end).sort((a,b)=>parseLocalDate(b.start)-parseLocalDate(a.start));
+  if(!c.length)return null;
+  const n=parseLocalDate(c[0].start);n.setDate(n.getDate()+(avgCyc()||28));return n;
+}
+function activePeriod(){
+  const today=new Date();today.setHours(0,0,0,0);
+  return S.logs.find(l=>{
+    if(!l.start)return false;
+    const s=parseLocalDate(l.start);s.setHours(0,0,0,0);
+    if(s>today)return false;
+    if(!l.end)return true;
+    const e=parseLocalDate(l.end);e.setHours(0,0,0,0);
+    return e>=today;
+  });
+}
+function periodDay(log){
+  const today=new Date();today.setHours(0,0,0,0);
+  const s=parseLocalDate(log.start);s.setHours(0,0,0,0);
+  return Math.round((today-s)/86400000)+1;
+}
+function rotateSuggestion(){
+  if(!S.niceThings.length)return'Check in and ask how she\'s feeling today.';
+  const today=new Date().toISOString().split('T')[0];
+  if(S.lastSugDate===today&&S.lastSugIdx>=0)return S.niceThings[S.lastSugIdx%S.niceThings.length];
+  const next=(S.lastSugIdx+1)%S.niceThings.length;
+  S.lastSugDate=today;S.lastSugIdx=next;save();
+  return S.niceThings[next];
+}
+
+// Nav
+function go(t,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  // find matching tab if btn not passed
+  if(btn){btn.classList.add('on');}
+  else{document.querySelectorAll('.tab').forEach(b=>{if((b.getAttribute('onclick')||'').includes("'"+t+"'"))b.classList.add('on');});}
+  const pane=document.getElementById('pane-'+t);
+  if(pane)pane.classList.add('on');
+  if(t==='care')loadCare();
+  if(t==='email'){loadCare();renderEmail();}
+  if(t==='hist')renderHist();
+  if(t==='db')renderDB();
+  if(t==='home')renderHome();
+  if(t==='today')renderToday();
+  if(t==='log'){const d=new Date().toISOString().split('T')[0];const el=document.getElementById('ls');if(el&&!el.value)el.value=d;}
+  if(t==='shop')renderShop();
+  if(t==='settings')renderSettings();
+  if(t==='people')renderPeople();
+  if(t==='upcoming')renderUpcoming();
+}
+
+// Home Dashboard
+function renderHome(){
+  const now=new Date();
+  const hour=now.getHours();
+  const greeting=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+  document.getElementById('home-greeting').textContent=(hour<12?'Good morning ☀️':hour<17?'Good afternoon 🌤️':'Good evening 🌙');
+  document.getElementById('home-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  // Status chips
+  const sb=document.getElementById('home-status-bar');
+  const chips=[];
+  const ap=activePeriod();
+  if(ap){
+    const day=periodDay(ap);
+    chips.push(`<div class="status-chip" onclick="go('today',null)"><div class="status-dot" style="background:var(--pink);"></div>Period day ${day}</div>`);
+  } else if(ready()){
+    const next=predNext();
+    if(next){
+      const diff=Math.round((next-now)/86400000);
+      const label=diff<=0?'Period due':diff===1?'Period tomorrow':'Period in '+diff+'d';
+      chips.push(`<div class="status-chip" onclick="go('db',null)"><div class="status-dot" style="background:var(--blue);"></div>${label}</div>`);
+    }
+  }
+  // Upcoming events count
+  let eventCount=0;
+  S.people.forEach(p=>(p.dates||[]).forEach(d=>{if(daysUntilNextOccurrence(d.month,d.day)<=14)eventCount++;}));
+  if(eventCount>0)chips.push(`<div class="status-chip" onclick="go('upcoming',null)"><div class="status-dot" style="background:var(--amber);"></div>${eventCount} event${eventCount!==1?'s':''} soon</div>`);
+  // Checklist items
+  const undone=S.shopItems.filter(i=>!i.done).length;
+  if(undone>0)chips.push(`<div class="status-chip" onclick="go('shop',null)"><div class="status-dot" style="background:var(--green);"></div>${undone} item${undone!==1?'s':''} on list</div>`);
+  sb.innerHTML=chips.join('');
+
+  // Upcoming events panel
+  const allSoon=[];
+  S.people.forEach(p=>{
+    (p.dates||[]).forEach(d=>{
+      const days=daysUntilNextOccurrence(d.month,d.day);
+      if(days<=30)allSoon.push({person:p,label:d.label,days,date:nextOccurrenceDate(d.month,d.day)});
+    });
+  });
+  allSoon.sort((a,b)=>a.days-b.days);
+  const evSection=document.getElementById('home-events-section');
+  const evList=document.getElementById('home-events-list');
+  if(allSoon.length){
+    evSection.style.display='block';
+    evList.innerHTML=allSoon.slice(0,5).map(e=>{
+      const idx=S.people.indexOf(e.person);
+      const emoji=e.person.emoji||(REL_EMOJI[e.person.rel]||'👤');
+      const chipCls=e.days<=3?'soon':e.days<=7?'upcoming':'far';
+      const daysLabel=e.days===0?'Today!':e.days===1?'Tomorrow':e.days+' days';
+      return`<div class="event-row">
+        <div class="event-avatar" style="background:${avatarColor(idx)};color:${avatarText(idx)};">${emoji}</div>
+        <div style="flex:1;">
+          <div class="event-label">${e.person.name} — ${e.label}</div>
+          <div class="event-sub">${e.date.toLocaleDateString('en-US',{month:'long',day:'numeric'})}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span class="days-chip ${chipCls}">${daysLabel}</span>
+          <button class="btn sm" style="border-color:var(--purple-border);color:var(--purple-text);font-size:11px;" onclick="go('people',null);setTimeout(()=>togglePerson('${e.person.id}'),150)">✨ Ideas</button>
+        </div>
+      </div>`;
+    }).join('');
+    if(allSoon.length>5)evList.innerHTML+=`<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px 0;cursor:pointer;" onclick="go('upcoming',null)">View all ${allSoon.length} upcoming dates →</div>`;
+  } else {
+    evSection.style.display='none';
+  }
+
+  // Nav card subtitles & badges
+  // Cycle card
+  const ncCycle=document.getElementById('nc-cycle');
+  if(ap){ncCycle.textContent='Day '+periodDay(ap)+' active';}
+  else if(ready()&&predNext()){const d=Math.round((predNext()-now)/86400000);ncCycle.textContent=d<=0?'Period due now':d===1?'Period tomorrow':'Next period in '+d+'d';}
+  else{ncCycle.textContent='Calendar & predictions';}
+
+  // Today card
+  const ncToday=document.getElementById('nc-today');
+  ncToday.textContent=ap?'Get today\'s suggestion':'No active period';
+
+  // People badge
+  const badge=document.getElementById('nc-people-badge');
+  if(eventCount>0){badge.style.display='block';badge.textContent=eventCount;}else badge.style.display='none';
+
+  // Upcoming badge
+  const ubadge=document.getElementById('nc-upcoming-badge');
+  const urgentCount=allSoon.filter(e=>e.days<=7).length;
+  if(urgentCount>0){ubadge.style.display='block';ubadge.textContent=urgentCount;}else ubadge.style.display='none';
+
+  // Upcoming sub
+  const ncUp=document.getElementById('nc-upcoming');
+  ncUp.textContent=allSoon.length?allSoon.length+' date'+(allSoon.length!==1?'s':'')+' coming up':'No dates soon';
+
+  // Checklist sub
+  const ncShop=document.getElementById('nc-shop');
+  ncShop.textContent=undone?undone+' item'+(undone!==1?'s':'')+' remaining':'All done!';
+
+  // Email sub
+  const ncEmail=document.getElementById('nc-email');
+  ncEmail.textContent=S.yourEmail?'Sending to '+S.yourEmail.split('@')[0]+'…':'Email not configured';
+}
+
+// Dashboard
+function renderDB(){
+  const c=complete(),r=ready(),l=S.logs.length,ap=activePeriod();
+  document.getElementById('db-empty').style.display=l===0?'block':'none';
+  document.getElementById('db-learn').style.display=(!r&&l>0&&!ap)?'block':'none';
+  document.getElementById('db-period').style.display=ap?'block':'none';
+  document.getElementById('db-ready').style.display=(r&&!ap)?'block':'none';
+  if(!r&&l>0){
+    document.getElementById('pbar').style.width=Math.min(c/REQ*100,100)+'%';
+    document.getElementById('cyc-badge').textContent=c+' cycle'+(c!==1?'s':'')+' logged';
+    document.getElementById('learn-sub').textContent=c===0?'Log your first complete cycle (start + end) to unlock emails':'Emails active — predictions improve as you log more cycles.';
+  }
+  if(ap){
+    const day=periodDay(ap),dur=avgDur()||5,left=Math.max(0,dur-day+1);
+    document.getElementById('db-day-pill').textContent='Day '+day;
+    document.getElementById('db-days-left').textContent=left+' day'+(left!==1?'s':'')+' estimated remaining';
+    document.getElementById('db-sug').textContent=rotateSuggestion();
+  }
+  if(r&&!ap){
+    const next=predNext(),today=new Date();today.setHours(0,0,0,0);
+    const diff=next?Math.round((next-today)/86400000):null;
+    const cb=document.getElementById('confirm-box');
+    if(diff!==null&&diff<=1&&diff>=-3){
+      cb.style.display='block';
+      document.getElementById('conf-msg').textContent=
+        diff===1?'Period predicted tomorrow — has it started early?':
+        diff===0?'Period predicted today. Confirm when it starts.':
+        'Period was predicted '+Math.abs(diff)+' day(s) ago. Has it started?';
+      document.getElementById('pred-desc').textContent=diff>0?'Predicted tomorrow — a good time to prepare!':diff===0?'Predicted today.':'Was predicted '+Math.abs(diff)+' day(s) ago.';
+    } else {
+      cb.style.display='none';
+      if(next)document.getElementById('pred-desc').textContent=(diff||0)+' days until next period ('+next.toLocaleDateString('en-US',{month:'long',day:'numeric'})+').';
+    }
+  }
+  document.getElementById('m-cyc').textContent=avgCyc()?avgCyc()+'d':'—';
+  document.getElementById('m-dur').textContent=avgDur()?avgDur()+'d':'—';
+  document.getElementById('m-cnt').textContent=S.logs.length;
+  renderCal();
+  renderDashboardAlerts();
+}
+
+function renderDashboardAlerts(){
+  const el=document.getElementById('db-upcoming-alert');if(!el)return;
+  const soon=[];
+  S.people.forEach(p=>{
+    (p.dates||[]).forEach(d=>{
+      const days=daysUntilNextOccurrence(d.month,d.day);
+      if(days<=14)soon.push({person:p,label:d.label,days,date:nextOccurrenceDate(d.month,d.day)});
+    });
+  });
+  soon.sort((a,b)=>a.days-b.days);
+  if(!soon.length){el.style.display='none';return;}
+  el.style.display='block';
+  el.innerHTML=soon.map(e=>{
+    const idx=S.people.indexOf(e.person);
+    const emoji=e.person.emoji||(REL_EMOJI[e.person.rel]||'👤');
+    const urgency=e.days===0?'Today!':e.days===1?'Tomorrow':e.days+' days away';
+    const chipCls=e.days<=3?'soon':'upcoming';
+    return`<div style="background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:12px;padding:1rem;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:${avatarColor(idx)};color:${avatarText(idx)};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${emoji}</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:var(--purple-text);">${e.person.name}'s ${e.label}</div>
+        <div style="font-size:12px;color:var(--purple-text);opacity:.8;">${e.date.toLocaleDateString('en-US',{month:'long',day:'numeric'})} · ${urgency}</div>
+      </div>
+      <button class="btn sm" style="border-color:var(--purple-border);color:var(--purple-text);" onclick="go('people',null);setTimeout(()=>togglePerson('${e.person.id}'),100)">View</button>
+    </div>`;
+  }).join('');
+}
+
+// Today
+function renderToday(){
+  const ap=activePeriod();
+  document.getElementById('today-none').style.display=ap?'none':'block';
+  document.getElementById('today-active').style.display=ap?'block':'none';
+  if(!ap)return;
+  const day=periodDay(ap),dur=avgDur()||5,left=Math.max(0,dur-day+1);
+  document.getElementById('today-pill').textContent='Day '+day;
+  document.getElementById('today-heading').textContent='Day '+day+' of her period';
+  document.getElementById('today-sub').textContent=left+' day'+(left!==1?'s':'')+' estimated remaining';
+  const pb=document.getElementById('priv-box'),pc=document.getElementById('priv-content');
+  if(S.privNotes&&S.privNotes.trim()){pb.style.display='block';pc.textContent=S.privNotes;}else pb.style.display='none';
+  fetchSuggestion();
+}
+async function fetchSuggestion(){
+  const el=document.getElementById('today-sug'),ap=activePeriod();if(!ap)return;
+  const day=periodDay(ap);el.textContent='Finding a suggestion...';
+  const prompt=`A husband's wife is on day ${day} of her period. Give him ONE warm, specific, actionable suggestion for something nice to do today.\n\nHer preferences: ${careCtx()||'(none saved)'}\n\nRules: Be specific and concrete. 1–2 sentences. Do not start with "You should". Sound like a helpful nudge from a friend.`;
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:100,messages:[{role:"user",content:prompt}]})});
+    const data=await res.json();
+    el.textContent=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('')||rotateSuggestion();
+  }catch(e){el.textContent=rotateSuggestion();}
+}
+function endPeriodToday(){
+  const ap=activePeriod();if(!ap)return;
+  if(!confirm('Mark her period as ended today?'))return;
+  const log=S.logs.find(l=>l.start===ap.start);
+  const today=new Date();
+  const todayStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  if(log){log.end=todayStr;save();renderDB();renderToday();renderHist();renderCal();}
+}
+
+// ── MY PEOPLE ─────────────────────────────────────────────────
+function daysUntilNextOccurrence(month, day){
+  const today=new Date();today.setHours(0,0,0,0);
+  let next=new Date(today.getFullYear(),month-1,day);
+  if(next<today)next=new Date(today.getFullYear()+1,month-1,day);
+  return Math.round((next-today)/86400000);
+}
+function nextOccurrenceDate(month,day){
+  const today=new Date();today.setHours(0,0,0,0);
+  let next=new Date(today.getFullYear(),month-1,day);
+  if(next<today)next=new Date(today.getFullYear()+1,month-1,day);
+  return next;
+}
+function avatarColor(idx){return AVATAR_COLORS[idx%AVATAR_COLORS.length];}
+function avatarText(idx){return AVATAR_TEXT[idx%AVATAR_TEXT.length];}
+
+function renderPeople(){
+  const list=document.getElementById('people-list');
+  const empty=document.getElementById('people-empty');
+  if(!S.people.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=S.people.map((p,idx)=>{
+    const emoji=p.emoji||(REL_EMOJI[p.rel]||'👤');
+    const upcomingDates=p.dates?p.dates.map(d=>{
+      const days=daysUntilNextOccurrence(d.month,d.day);
+      const chipClass=days<=7?'soon':days<=30?'upcoming':'far';
+      const dateStr=nextOccurrenceDate(d.month,d.day).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      return`<div class="upcoming-event">
+        <div>
+          <div style="font-weight:500;">${d.label}</div>
+          <div style="font-size:12px;color:var(--muted);">${dateStr}</div>
+        </div>
+        <span class="days-chip ${chipClass}">${days===0?'Today!':days===1?'Tomorrow':days+' days'}</span>
+      </div>`;
+    }).join(''):'';
+    const makeTags=(arr,color)=>arr&&arr.length?arr.map(t=>`<span class="tag ${color||'pu'}" style="margin:2px;">${t}</span>`).join(''):'';
+    const section=(title,content)=>content?`<div style="margin-top:12px;"><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">${title}</div>${content}</div>`:'';
+    const aiSugBtn=`<button class="btn sm" style="margin-top:12px;width:100%;border-color:var(--purple-border);color:var(--purple-text);" onclick="event.stopPropagation();getPersonSuggestion('${p.id}')">✨ Get AI gift suggestion</button>`;
+    const aiSugBox=`<div id="ai-sug-${p.id}" style="display:none;margin-top:10px;background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:10px;padding:12px;font-size:13px;color:var(--purple-text);line-height:1.7;"></div>`;
+    return`<div class="person-card" id="pc-${p.id}">
+      <div class="person-header" onclick="togglePerson('${p.id}')">
+        <div class="person-avatar" style="background:${avatarColor(idx)};color:${avatarText(idx)};">${emoji}</div>
+        <div style="flex:1;">
+          <div class="person-name">${p.name}</div>
+          <div class="person-meta">${p.rel?p.rel.charAt(0).toUpperCase()+p.rel.slice(1):''}${p.dates&&p.dates.length?' · '+p.dates.length+' date'+(p.dates.length!==1?'s':''):''}</div>
+        </div>
+        <button class="btn sm" onclick="event.stopPropagation();openModal('${p.id}')" style="flex-shrink:0;">Edit</button>
+      </div>
+      <div class="person-body" id="pb-${p.id}">
+        ${upcomingDates}
+        ${section('Favorite foods & drinks',makeTags(p.foods,'on'))}
+        ${section('Hobbies & interests',makeTags(p.hobbies))}
+        ${section('Gift ideas',makeTags(p.gifts,'pu'))}
+        ${section('Likes',makeTags(p.likes))}
+        ${p.sizeClothing||p.sizeShoe?section('Sizes',(p.sizeClothing?`<span class="tag">👕 ${p.sizeClothing}</span>`:'')+' '+(p.sizeShoe?`<span class="tag">👟 ${p.sizeShoe}</span>`:'')):'' }
+        ${p.notes?section('Notes',`<div style="font-size:13px;color:var(--muted2);line-height:1.6;">${p.notes}</div>`):''}
+        ${aiSugBtn}
+        ${aiSugBox}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function togglePerson(id){
+  const body=document.getElementById('pb-'+id);
+  const card=document.getElementById('pc-'+id);
+  const isOpen=body.classList.contains('show');
+  // Close all
+  document.querySelectorAll('.person-body').forEach(b=>b.classList.remove('show'));
+  document.querySelectorAll('.person-card').forEach(c=>c.classList.remove('expanded'));
+  if(!isOpen){body.classList.add('show');card.classList.add('expanded');}
+}
+
+// Upcoming dates view
+function renderUpcoming(){
+  const all=[];
+  S.people.forEach(p=>{
+    (p.dates||[]).forEach(d=>{
+      const days=daysUntilNextOccurrence(d.month,d.day);
+      const date=nextOccurrenceDate(d.month,d.day);
+      all.push({person:p,label:d.label,days,date});
+    });
+  });
+  all.sort((a,b)=>a.days-b.days);
+  const empty=document.getElementById('upcoming-empty');
+  const list=document.getElementById('upcoming-list');
+  if(!all.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  // Group: this week, this month, later
+  const week=all.filter(e=>e.days<=7);
+  const month=all.filter(e=>e.days>7&&e.days<=30);
+  const later=all.filter(e=>e.days>30);
+
+  function renderGroup(items,title){
+    if(!items.length)return'';
+    return`<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;">${title}</div>`+
+    `<div class="card" style="padding:0 1.25rem;">`+items.map(e=>{
+      const idx=S.people.indexOf(e.person);
+      const emoji=e.person.emoji||(REL_EMOJI[e.person.rel]||'👤');
+      const chipClass=e.days<=7?'soon':e.days<=30?'upcoming':'far';
+      const dateStr=e.date.toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric'});
+      return`<div class="upcoming-event">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:${avatarColor(idx)};color:${avatarText(idx)};display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">${emoji}</div>
+          <div>
+            <div style="font-weight:500;">${e.person.name} — ${e.label}</div>
+            <div style="font-size:12px;color:var(--muted);">${dateStr}</div>
+          </div>
+        </div>
+        <span class="days-chip ${chipClass}">${e.days===0?'Today!':e.days===1?'Tomorrow':e.days+' days'}</span>
+      </div>`;
+    }).join('')+`</div>`;
+  }
+
+  list.innerHTML=renderGroup(week,'This week')+renderGroup(month,'This month')+renderGroup(later,'Coming up');
+}
+
+// Modal
+function openModal(personId){
+  editingPersonId=personId||null;
+  modalTempDates=[];modalTempLikes=[];
+  const modal=document.getElementById('person-modal');
+  modal.classList.remove('hidden');
+  document.getElementById('modal-title-text').textContent=personId?'Edit person':'Add person';
+  document.getElementById('del-person-btn').style.display=personId?'block':'none';
+  // Clear all fields
+  ['p-name','p-emoji','p-notes','new-date-label','new-date-val','p-foods-inp','p-hobbies-inp','p-gifts-inp','p-likes-inp','p-size-clothing','p-size-shoe'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('p-rel').value='wife';
+  modalTempFoods=[];modalTempHobbies=[];modalTempGifts=[];
+  if(personId){
+    const p=S.people.find(p=>p.id===personId);
+    if(p){
+      document.getElementById('p-name').value=p.name||'';
+      document.getElementById('p-rel').value=p.rel||'other';
+      document.getElementById('p-emoji').value=p.emoji||'';
+      document.getElementById('p-notes').value=p.notes||'';
+      document.getElementById('p-size-clothing').value=p.sizeClothing||'';
+      document.getElementById('p-size-shoe').value=p.sizeShoe||'';
+      modalTempDates=[...(p.dates||[])];
+      modalTempLikes=[...(p.likes||[])];
+      modalTempFoods=[...(p.foods||[])];
+      modalTempHobbies=[...(p.hobbies||[])];
+      modalTempGifts=[...(p.gifts||[])];
+    }
+  }
+  renderModalDates();renderModalLikes();renderModalCatTags();
+}
+function closeModal(){document.getElementById('person-modal').classList.add('hidden');}
+function addDateField(){
+  const label=document.getElementById('new-date-label').value.trim();
+  const val=document.getElementById('new-date-val').value;
+  if(!label||!val){alert('Enter both a label and a date.');return;}
+  const d=new Date(val+'T12:00:00');
+  modalTempDates.push({label,month:d.getMonth()+1,day:d.getDate()});
+  document.getElementById('new-date-label').value='';
+  document.getElementById('new-date-val').value='';
+  renderModalDates();
+}
+function removeModalDate(i){modalTempDates.splice(i,1);renderModalDates();}
+function renderModalDates(){
+  document.getElementById('p-dates-list').innerHTML=modalTempDates.map((d,i)=>
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:14px;">
+      <span><strong>${d.label}</strong> — ${new Date(2024,d.month-1,d.day).toLocaleDateString('en-US',{month:'long',day:'numeric'})}</span>
+      <button onclick="removeModalDate(${i})" style="border:none;background:none;color:var(--muted);cursor:pointer;font-size:18px;">×</button>
+    </div>`).join('');
+}
+function addPersonLike(e){
+  if(e.key!=='Enter')return;
+  const inp=document.getElementById('p-likes-inp'),val=inp.value.trim();if(!val)return;
+  if(!modalTempLikes.includes(val))modalTempLikes.push(val);
+  inp.value='';renderModalLikes();
+}
+function removePersonLike(v){modalTempLikes=modalTempLikes.filter(l=>l!==v);renderModalLikes();}
+function renderModalLikes(){
+  document.getElementById('p-likes-tags').innerHTML=modalTempLikes.map(l=>
+    `<span class="tag pu">${l} <span onclick="removePersonLike(${JSON.stringify(l)})" style="cursor:pointer;opacity:.6;">×</span></span>`).join('');
+}
+function addPersonCat(e,cat){
+  if(e.key!=='Enter')return;
+  addPersonCatVal(cat);
+}
+function addPersonCatBtn(cat){addPersonCatVal(cat);}
+function addPersonCatVal(cat){
+  const idMap={foods:'p-foods-inp',hobbies:'p-hobbies-inp',gifts:'p-gifts-inp'};
+  const inp=document.getElementById(idMap[cat]),val=inp.value.trim();if(!val)return;
+  const arr=cat==='foods'?modalTempFoods:cat==='hobbies'?modalTempHobbies:modalTempGifts;
+  if(!arr.includes(val))arr.push(val);
+  inp.value='';renderModalCatTags();
+}
+function addPersonLikeBtn(){
+  const inp=document.getElementById('p-likes-inp'),val=inp.value.trim();if(!val)return;
+  if(!modalTempLikes.includes(val))modalTempLikes.push(val);
+  inp.value='';renderModalLikes();
+}
+function removePersonCat(cat,v){
+  if(cat==='foods')modalTempFoods=modalTempFoods.filter(x=>x!==v);
+  else if(cat==='hobbies')modalTempHobbies=modalTempHobbies.filter(x=>x!==v);
+  else modalTempGifts=modalTempGifts.filter(x=>x!==v);
+  renderModalCatTags();
+}
+function renderModalCatTags(){
+  const tagHtml=(arr,cat,cls)=>arr.map(v=>`<span class="tag ${cls}">${v} <span onclick="removePersonCat('${cat}',${JSON.stringify(v)})" style="cursor:pointer;opacity:.6;">×</span></span>`).join('');
+  document.getElementById('p-foods-tags').innerHTML=tagHtml(modalTempFoods,'foods','on');
+  document.getElementById('p-hobbies-tags').innerHTML=tagHtml(modalTempHobbies,'hobbies','');
+  document.getElementById('p-gifts-tags').innerHTML=tagHtml(modalTempGifts,'gifts','pu');
+}
+function savePerson(){
+  const name=document.getElementById('p-name').value.trim();
+  if(!name){alert('Please enter a name.');return;}
+  const person={
+    id:editingPersonId||(Date.now().toString()),
+    name,
+    rel:document.getElementById('p-rel').value,
+    emoji:document.getElementById('p-emoji').value.trim(),
+    dates:[...modalTempDates],
+    likes:[...modalTempLikes],
+    foods:[...modalTempFoods],
+    hobbies:[...modalTempHobbies],
+    gifts:[...modalTempGifts],
+    sizeClothing:document.getElementById('p-size-clothing').value.trim(),
+    sizeShoe:document.getElementById('p-size-shoe').value.trim(),
+    notes:document.getElementById('p-notes').value
+  };
+  if(editingPersonId){
+    const idx=S.people.findIndex(p=>p.id===editingPersonId);
+    if(idx>=0)S.people[idx]=person;
+  } else {
+    S.people.push(person);
+  }
+  save();toast('t-person','ok');
+  setTimeout(()=>{closeModal();renderPeople();renderUpcoming();},800);
+}
+function deletePerson(){
+  if(!editingPersonId)return;
+  if(!confirm('Remove this person?'))return;
+  S.people=S.people.filter(p=>p.id!==editingPersonId);
+  save();closeModal();renderPeople();renderUpcoming();
+}
+
+async function getPersonSuggestion(personId){
+  const p=S.people.find(x=>x.id===personId);
+  if(!p)return;
+  const box=document.getElementById('ai-sug-'+personId);
+  if(!box)return;
+  box.style.display='block';
+  box.textContent='Thinking of a suggestion...';
+
+  // Find their nearest upcoming date
+  const upcoming=(p.dates||[]).map(d=>({label:d.label,days:daysUntilNextOccurrence(d.month,d.day),date:nextOccurrenceDate(d.month,d.day)})).sort((a,b)=>a.days-b.days);
+  const next=upcoming[0];
+
+  const context=[
+    p.foods&&p.foods.length?'Favorite foods/drinks: '+p.foods.join(', '):'',
+    p.hobbies&&p.hobbies.length?'Hobbies: '+p.hobbies.join(', '):'',
+    p.gifts&&p.gifts.length?'Gift ideas already noted: '+p.gifts.join(', '):'',
+    p.likes&&p.likes.length?'Other likes: '+p.likes.join(', '):'',
+    p.sizeClothing?'Clothing size: '+p.sizeClothing:'',
+    p.sizeShoe?'Shoe size: '+p.sizeShoe:'',
+    p.notes?'Notes: '+p.notes:''
+  ].filter(Boolean).join('\n');
+
+  const occasion=next?`Their upcoming ${next.label} is in ${next.days} day${next.days!==1?'s':''} (${next.date.toLocaleDateString('en-US',{month:'long',day:'numeric'})}).`:'No upcoming date logged yet — give a general thoughtful idea.';
+
+  const prompt=`You are helping a thoughtful husband find the perfect gesture or gift for ${p.name} (${p.rel||'family/friend'}).
+
+${occasion}
+
+What they like and who they are:
+${context||'(No details saved yet — give a warm general suggestion)'}
+
+Give 2–3 specific, creative, thoughtful gift or gesture ideas tailored to this person. Be concrete — not "a book" but suggest a genre or specific type based on their interests. Not "dinner" but suggest a cuisine they love. Include one DIY/experience idea and one purchase idea. Keep it warm and encouraging. Under 150 words. No bullet points — write in natural sentences.`;
+
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:250,messages:[{role:"user",content:prompt}]})
+    });
+    const data=await res.json();
+    const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    box.textContent=txt||'Could not generate a suggestion right now.';
+  }catch(e){box.textContent='Could not connect. Try again.';}
+}
+
+// Calendar
+let calYear=new Date().getFullYear(), calMonth=new Date().getMonth();
+function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}else if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+
+function localDateStr(dateObj){
+  // Returns YYYY-MM-DD in local time — fixes off-by-one from UTC parsing
+  const y=dateObj.getFullYear(),m=String(dateObj.getMonth()+1).padStart(2,'0'),d=String(dateObj.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+d;
+}
+function parseLocalDate(str){
+  // Parse YYYY-MM-DD as local date (not UTC) to fix off-by-one bug
+  if(!str)return null;
+  const [y,m,d]=str.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+
+function renderCal(){
+  const now=new Date();now.setHours(0,0,0,0);
+  const yr=calYear,mo=calMonth;
+  const dim=new Date(yr,mo+1,0).getDate();
+  const firstDow=new Date(yr,mo,1).getDay(); // 0=Sun
+
+  // Label
+  document.getElementById('cal-month-label').textContent=
+    new Date(yr,mo,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+
+  // Day-of-week headers
+  const dowRow=document.getElementById('cal-dow-row');
+  dowRow.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>
+    `<div class="cal-dow">${d}</div>`).join('');
+
+  // Build sets for this month — actual periods
+  const actualDays=new Map(); // day -> 'period'|'end'
+  S.logs.forEach(l=>{
+    if(!l.start)return;
+    const s=parseLocalDate(l.start);
+    const e=l.end?parseLocalDate(l.end):null;
+    for(let d=new Date(s);;d.setDate(d.getDate()+1)){
+      if(d.getMonth()===mo&&d.getFullYear()===yr){
+        const day=d.getDate();
+        if(e&&localDateStr(d)===localDateStr(e))actualDays.set(day,'end');
+        else if(!actualDays.has(day)||actualDays.get(day)!=='end')actualDays.set(day,'period');
+      }
+      if(e){if(d>=e)break;}else break;
+    }
+  });
+
+  // Predicted days — show across multiple future cycles
+  const predDays=new Map(); // day -> 'pred'|'pred-end'
+  const dur=avgDur()||5;
+  const cyc=avgCyc()||28;
+  if(S.logs.length>0){
+    // Start from last known period and project forward
+    const completeLogs=S.logs.filter(l=>l.start&&l.end).sort((a,b)=>parseLocalDate(b.start)-parseLocalDate(a.start));
+    const allLogs=S.logs.filter(l=>l.start).sort((a,b)=>parseLocalDate(b.start)-parseLocalDate(a.start));
+    const lastLog=allLogs[0];
+    if(lastLog){
+      let base=parseLocalDate(lastLog.start);
+      // Project up to 12 months ahead
+      for(let cycle=1;cycle<=12;cycle++){
+        const nextStart=new Date(base);nextStart.setDate(nextStart.getDate()+cyc*cycle);
+        const nextEnd=new Date(nextStart);nextEnd.setDate(nextEnd.getDate()+dur-1);
+        for(let d=new Date(nextStart);d<=nextEnd;d.setDate(d.getDate()+1)){
+          if(d.getMonth()===mo&&d.getFullYear()===yr){
+            const day=d.getDate();
+            if(!actualDays.has(day)){
+              if(localDateStr(d)===localDateStr(nextEnd))predDays.set(day,'pred-end');
+              else if(!predDays.has(day))predDays.set(day,'pred');
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Render grid
+  const el=document.getElementById('cal');el.innerHTML='';
+  // Empty cells for first week offset
+  for(let i=0;i<firstDow;i++){
+    const empty=document.createElement('div');empty.className='cal-cell empty';el.appendChild(empty);
+  }
+  for(let i=1;i<=dim;i++){
+    const cell=document.createElement('div');cell.className='cal-cell';cell.textContent=i;
+    const dateStr=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    cell.dataset.date=dateStr;
+    if(i===now.getDate()&&mo===now.getMonth()&&yr===now.getFullYear())cell.classList.add('td');
+    if(actualDays.get(i)==='end')cell.classList.add('actual-end');
+    else if(actualDays.get(i)==='period')cell.classList.add('actual');
+    else if(predDays.get(i)==='pred-end')cell.classList.add('predicted-end');
+    else if(predDays.get(i)==='pred')cell.classList.add('predicted');
+    cell.onclick=()=>showDayDetail(dateStr,i,actualDays.get(i),predDays.get(i));
+    el.appendChild(cell);
+  }
+}
+
+function showDayDetail(dateStr,dayNum,actualType,predType){
+  const detail=document.getElementById('day-detail');
+  const dateLabel=parseLocalDate(dateStr).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('day-detail-date').textContent=dateLabel;
+  // Remove selected highlight from all, add to this
+  document.querySelectorAll('.cal-cell.selected').forEach(c=>c.classList.remove('selected'));
+  const clicked=document.querySelector(`.cal-cell[data-date="${dateStr}"]`);
+  if(clicked)clicked.classList.add('selected');
+
+  let info='';let actions='';
+  const log=S.logs.find(l=>l.start===dateStr||(l.start<=dateStr&&(l.end>=dateStr||!l.end)));
+  if(actualType==='period'){
+    const matchLog=S.logs.find(l=>l.start===dateStr);
+    if(matchLog){info=`Period start. ${matchLog.notes?'Notes: '+matchLog.notes:''}`;}
+    else{
+      const spanLog=S.logs.find(l=>l.start<dateStr&&(l.end>=dateStr||!l.end));
+      if(spanLog)info=`Day ${Math.round((parseLocalDate(dateStr)-parseLocalDate(spanLog.start))/86400000)+1} of period starting ${spanLog.start}.${spanLog.notes?' Notes: '+spanLog.notes:''}`;
+    }
+    actions=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn sm pk" onclick="setAsStart('${dateStr}')">Set as period start</button>
+      <button class="btn sm" onclick="setAsEnd('${dateStr}')">Set as period end</button>
+    </div>`;
+  } else if(actualType==='end'){
+    info='Period end day.';
+    actions=`<div style="margin-top:8px;"><button class="btn sm" onclick="setAsEnd('${dateStr}')">Change end date</button></div>`;
+  } else if(predType==='pred'){
+    info='Predicted period day based on your cycle history.';
+    actions=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn sm pk" onclick="setAsStart('${dateStr}')">Period actually started today</button>
+    </div>`;
+  } else if(predType==='pred-end'){
+    info='Predicted period end day.';
+  } else {
+    info='No period data for this day.';
+    actions=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn sm pk" onclick="setAsStart('${dateStr}')">Log as period start</button>
+    </div>`;
+  }
+  document.getElementById('day-detail-info').textContent=info;
+  document.getElementById('day-detail-actions').innerHTML=actions;
+  detail.style.display='block';
+}
+
+function setAsStart(dateStr){
+  // Find any log that starts on this date or update most recent open log
+  const existing=S.logs.find(l=>l.start===dateStr);
+  if(existing){renderCal();renderDB();return;}
+  // Check for open log (no end) — ask to update
+  const open=S.logs.find(l=>!l.end);
+  if(open&&confirm('Update the open period (started '+open.start+') to start on '+dateStr+' instead?')){
+    open.start=dateStr;save();renderCal();renderDB();renderHist();return;
+  }
+  S.logs.push({start:dateStr,end:'',notes:'',confirmed:false});
+  save();renderCal();renderDB();renderHist();
+  document.getElementById('day-detail-info').textContent='Period start logged for this day.';
+}
+
+function setAsEnd(dateStr){
+  // Find log that spans this date or most recent open log
+  const open=S.logs.find(l=>!l.end&&l.start<=dateStr);
+  if(open){open.end=dateStr;save();renderCal();renderDB();renderHist();
+    document.getElementById('day-detail-info').textContent='Period end set for this day.';return;}
+  const spanning=S.logs.find(l=>l.start<=dateStr&&l.end>=dateStr);
+  if(spanning){spanning.end=dateStr;save();renderCal();renderDB();renderHist();
+    document.getElementById('day-detail-info').textContent='Period end updated.';return;}
+  alert('No open period found to set end for. Log a start date first.');
+}
+
+// Log
+function logPeriod(){
+  const s=document.getElementById('ls').value,e=document.getElementById('le').value,n=document.getElementById('ln').value;
+  if(!s){alert('Please enter a start date.');return;}
+  if(e&&e<s){alert('End date must be on or after start date.');return;}
+  const idx=S.logs.findIndex(l=>l.start===s);
+  if(idx>=0){S.logs[idx].end=e||S.logs[idx].end;S.logs[idx].notes=n||S.logs[idx].notes;}
+  else S.logs.push({start:s,end:e||'',notes:n,confirmed:false});
+  document.getElementById('ls').value='';document.getElementById('le').value='';document.getElementById('ln').value='';
+  save();toast('t-log','ok');renderDB();renderHist();renderCal();
+}
+function confirmToday(){
+  const t=new Date().toISOString().split('T')[0];
+  const ex=S.logs.find(l=>l.start===t);
+  if(!ex)S.logs.push({start:t,end:'',notes:'Confirmed',confirmed:true});else ex.confirmed=true;
+  save();renderDB();renderHist();
+  document.getElementById('confirm-box').style.display='none';toast('t-log','ok');
+}
+
+// Tags
+function addTag(e,type){
+  if(e.key!=='Enter')return;
+  addTagVal(type);
+}
+function addTagBtn(type){addTagVal(type);}
+function addTagVal(type){
+  const inp=document.getElementById(type==='food'?'fi':'ni'),val=inp.value.trim();if(!val)return;
+  if(type==='food'){if(!S.foods.includes(val))S.foods.push(val);}
+  else{if(!S.niceThings.includes(val))S.niceThings.push(val);}
+  inp.value='';save();renderTags();
+}
+function removeTag(t,v){
+  if(t==='food')S.foods=S.foods.filter(f=>f!==v);else S.niceThings=S.niceThings.filter(f=>f!==v);
+  save();renderTags();
+}
+function renderTags(){
+  const tagHtml=(arr,type)=>arr.length
+    ? arr.map(v=>`<span class="tag on" style="margin:3px;">${v} <span onclick="removeTag('${type}',${JSON.stringify(v)})" style="cursor:pointer;font-weight:700;opacity:.7;margin-left:2px;">×</span></span>`).join('')
+    : '<span style="font-size:13px;color:var(--muted);">None added yet</span>';
+  const ft=document.getElementById('ftags');if(ft)ft.innerHTML=tagHtml(S.foods||[],'food');
+  const nt=document.getElementById('ntags');if(nt)nt.innerHTML=tagHtml(S.niceThings||[],'nice');
+}
+function loadCare(){
+  const g=id=>document.getElementById(id);
+  g('onotes').value=S.otherNotes||'';
+  g('privnotes').value=S.privNotes||'';
+  const ye=g('youremail');if(ye)ye.value=S.yourEmail||'';
+  const re=g('rdays');if(re)re.value=S.remindDays||1;
+  const mt=g('mid-toggle');if(mt)mt.checked=!!S.midPeriodEmail;
+  const prd=document.getElementById('people-remind-days');if(prd)prd.value=S.peopleRemindDays||2;
+  renderTags();renderTampons();renderCoffees();
+}
+function saveCare(){
+  const g=id=>{const e=document.getElementById(id);return e?e.value:'';}
+  const gb=id=>{const e=document.getElementById(id);return e?e.checked:false;}
+  S.otherNotes=g('onotes');S.privNotes=g('privnotes');
+  const ye=document.getElementById('youremail');if(ye)S.yourEmail=ye.value;
+  const re=document.getElementById('rdays');if(re)S.remindDays=re.value||1;
+  const mt=document.getElementById('mid-toggle');if(mt)S.midPeriodEmail=mt.checked;
+  const prdEl=document.getElementById('people-remind-days');if(prdEl)S.peopleRemindDays=parseInt(prdEl.value)||2;
+  save();toast('t-care','ok');
+}
+
+// Tampon list
+function addTampon(){
+  const brand=document.getElementById('t-brand-new').value.trim();
+  const size=document.getElementById('t-size-new').value;
+  if(!brand&&!size){alert('Enter a brand or select a size.');return;}
+  if(!S.tampons)S.tampons=[];
+  S.tampons.push({brand,size});
+  document.getElementById('t-brand-new').value='';
+  document.getElementById('t-size-new').value='';
+  save();renderTampons();
+}
+function removeTampon(i){S.tampons.splice(i,1);save();renderTampons();}
+function renderTampons(){
+  if(!S.tampons)S.tampons=[];
+  const el=document.getElementById('tampon-list');if(!el)return;
+  if(!S.tampons.length){el.innerHTML='<div style="font-size:13px;color:var(--muted);padding:4px 0;">No tampon preferences saved yet.</div>';return;}
+  el.innerHTML=S.tampons.map((t,i)=>`
+    <div class="chk-row" style="padding:8px 0;">
+      <span style="flex:1;font-size:14px;">${[t.brand,t.size].filter(Boolean).join(' — ')||'(unnamed)'}</span>
+      <button onclick="removeTampon(${i})" style="border:none;background:none;color:var(--red-text);cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">×</button>
+    </div>`).join('');
+}
+
+// Coffee list
+function addCoffee(){
+  const val=document.getElementById('coff-new').value.trim();
+  if(!val){alert('Enter a coffee order.');return;}
+  if(!S.coffeeOrders)S.coffeeOrders=[];
+  if(!S.coffeeOrders.includes(val))S.coffeeOrders.push(val);
+  document.getElementById('coff-new').value='';
+  save();renderCoffees();
+}
+function removeCoffee(i){S.coffeeOrders.splice(i,1);save();renderCoffees();}
+function renderCoffees(){
+  if(!S.coffeeOrders)S.coffeeOrders=[];
+  const el=document.getElementById('coffee-list');if(!el)return;
+  if(!S.coffeeOrders.length){el.innerHTML='<div style="font-size:13px;color:var(--muted);padding:4px 0;">No coffee orders saved yet.</div>';return;}
+  el.innerHTML=S.coffeeOrders.map((o,i)=>`
+    <div class="chk-row" style="padding:8px 0;">
+      <span style="flex:1;font-size:14px;">☕ ${o}</span>
+      <button onclick="removeCoffee(${i})" style="border:none;background:none;color:var(--red-text);cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">×</button>
+    </div>`).join('');
+}
+
+// Checklist
+function defaultItems(){
+  const items=[];
+  (S.tampons||[]).forEach(t=>items.push([t.brand,t.size].filter(Boolean).join(' ')+' tampons'));
+  (S.coffeeOrders||[]).forEach(o=>items.push('Her coffee: '+o));
+  (S.foods||[]).forEach(f=>items.push(f));
+  return items.map(t=>({text:t,done:false}));
+}
+function renderShop(){
+  if(!S.shopItems.length){S.shopItems=defaultItems();save();}
+  const el=document.getElementById('shop-list');
+  if(!S.shopItems.length){el.innerHTML='<div style="font-size:14px;color:var(--muted);padding:8px 0;">Save care notes first, or add items below.</div>';return;}
+  el.innerHTML=S.shopItems.map((item,i)=>`<div class="chk-row${item.done?' done':''}">
+    <input type="checkbox" ${item.done?'checked':''} onchange="toggleShop(${i})"/>
+    <span style="flex:1;">${item.text}</span>
+    <button onclick="removeShop(${i})" style="border:none;background:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;">×</button>
+  </div>`).join('');
+}
+function toggleShop(i){S.shopItems[i].done=!S.shopItems[i].done;save();renderShop();}
+function removeShop(i){S.shopItems.splice(i,1);save();renderShop();}
+function addShopItem(){
+  const inp=document.getElementById('shop-new'),v=inp.value.trim();if(!v)return;
+  S.shopItems.push({text:v,done:false});inp.value='';save();renderShop();
+}
+function resetChecklist(){if(!confirm('Reset checklist?'))return;S.shopItems=defaultItems();save();renderShop();}
+
+// Email
+function renderEmail(){
+  const r=ready();
+  document.getElementById('e-locked').style.display=r?'none':'block';
+  document.getElementById('e-form').style.opacity=r?'1':'0.4';
+  document.getElementById('gen-btn').disabled=!r;
+  document.getElementById('last-sent-info').textContent=S.lastSentFor?'Last reminder sent for: '+new Date(S.lastSentFor).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'No emails sent yet.';
+  if(r){const n=predNext();if(n){const sd=new Date(n);sd.setDate(sd.getDate()-(parseInt(S.remindDays)||1));document.getElementById('auto-status').textContent='Next auto-send: '+sd.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})+' — just open the app that day.';}}
+  // Show upcoming people reminders
+  const prl=document.getElementById('people-reminder-list');
+  if(prl){
+    const upcoming=getPeopleRemindersToShow(60);
+    if(!upcoming.length){prl.textContent='No people dates in the next 60 days. Add dates in My People.';}
+    else{prl.innerHTML=upcoming.map(r=>{
+      const chip=r.days<=3?'soon':r.days<=7?'upcoming':'far';
+      return`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--purple-border);">
+        <div><span style="font-weight:500;">${r.person.name}</span> — ${r.date.label}<br><span style="font-size:11px;color:var(--muted);">Reminder sends ${r.remindDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>
+        <span class="days-chip ${chip}">${r.days===0?'Today':r.days===1?'Tomorrow':r.days+' days'}</span>
+      </div>`;
+    }).join('');}
+  }
+}
+function careCtx(){
+  const p=[];
+  if(S.tampons&&S.tampons.length)p.push('Tampon preferences: '+S.tampons.map(t=>[t.brand,t.size].filter(Boolean).join(' ')).join(', '));
+  if(S.coffeeOrders&&S.coffeeOrders.length)p.push('Coffee orders: '+S.coffeeOrders.join(' / '));
+  if(S.foods&&S.foods.length)p.push('Favorite foods: '+S.foods.join(', '));
+  if(S.niceThings&&S.niceThings.length)p.push('Nice gestures she loves: '+S.niceThings.join(', '));
+  if(S.otherNotes)p.push('Other notes: '+S.otherNotes);
+  return p.join('\n');
+}
+function buildPrompt(ds){
+  return`You are helping a caring husband prepare for his wife's upcoming period, predicted to start ${ds}.\n\nHer care notes:\n${careCtx()||'(none saved)'}\n\nWrite a warm, personal reminder email body (no subject line):\n- Mention tampon brand/size naturally; suggest surprising her with her exact coffee order; pick ONE food and suggest a specific gesture\n- Pick 2–3 nice things from her list, weave them naturally. Add 1–2 of your own ideas inspired by her personality\n- Short natural paragraphs only — no bullets, no lists\n- Under 220 words. Sign off as "The Thoughtful Husband app"`;
+}
+function buildMidPrompt(day){
+  return`A husband's wife is on day ${day} of her period. Write a short warm mid-period check-in email (no subject line).\n\nHer preferences: ${careCtx()||'(none saved)'}\n\nSuggest checking the tampon supply${S.tampons&&S.tampons.length?' ('+S.tampons.map(t=>[t.brand,t.size].filter(Boolean).join(' ')).join(' or ')+')':''}, bringing something comforting, and one small thoughtful gesture. Warm, specific, under 120 words. Sign off as "The Thoughtful Husband app".`;
+}
+function setEmailError(msg){
+  const el=document.getElementById('api-error-detail');
+  if(!el)return;
+  if(msg){el.textContent=msg;el.style.display='block';}
+  else{el.style.display='none';}
+}
+
+async function generatePreview(){
+  const statusEl=document.getElementById('gen-status');
+  const previewEl=document.getElementById('epreview');
+  const genBtn=document.getElementById('gen-btn');
+  const sendBtn=document.getElementById('send-btn');
+  const regenBtn=document.getElementById('regen-btn');
+  setEmailError('');
+  statusEl.textContent='Writing a personalised email...';
+  previewEl.textContent='';
+  if(genBtn)genBtn.disabled=true;
+  if(sendBtn)sendBtn.style.display='none';
+  if(regenBtn)regenBtn.style.display='none';
+
+  const next=predNext();
+  const ds=next?next.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}):'an upcoming date';
+  const prompt=buildPrompt(ds);
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:450,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    if(!res.ok){
+      const errText=await res.text();
+      statusEl.textContent='API error — could not generate.';
+      setEmailError('HTTP '+res.status+': '+errText.slice(0,300));
+      if(genBtn)genBtn.disabled=false;
+      return;
+    }
+    const data=await res.json();
+    if(data.error){
+      statusEl.textContent='API returned an error.';
+      setEmailError(JSON.stringify(data.error));
+      if(genBtn)genBtn.disabled=false;
+      return;
+    }
+    const body=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    if(!body){
+      statusEl.textContent='No content returned — try again.';
+      setEmailError('Response had no text content. Full response: '+JSON.stringify(data).slice(0,300));
+      if(genBtn)genBtn.disabled=false;
+      return;
+    }
+    emailBody=body;
+    previewEl.textContent=body;
+    statusEl.textContent='Email ready. Review it above, then click Send.';
+    if(sendBtn)sendBtn.style.display='inline-block';
+    if(regenBtn)regenBtn.style.display='inline-block';
+    if(genBtn)genBtn.style.display='none';
+  }catch(err){
+    statusEl.textContent='Network error — could not reach the API.';
+    setEmailError('Network error: '+err.message);
+  }
+  if(genBtn)genBtn.disabled=false;
+}
+
+async function sendGeneratedEmail(){
+  if(!emailBody){alert('Generate the email first.');return;}
+  const email=(S.yourEmail||'').trim();
+  if(!email){alert('Please enter your email address in the settings card above.');return;}
+  const statusEl=document.getElementById('gen-status');
+  const sendBtn=document.getElementById('send-btn');
+  setEmailError('');
+  statusEl.textContent='Sending via Gmail...';
+  if(sendBtn)sendBtn.disabled=true;
+
+  const next=predNext();
+  const ds=next?next.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}):'an upcoming date';
+  const subj='Heads up: Period predicted '+ds;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        messages:[{role:'user',content:'Send an email to '+email+' with subject: ['+subj+'] and this exact body:\n\n'+emailBody+'\n\nUse Gmail. Confirm when sent.'}],
+        mcp_servers:[{type:'url',url:'https://gmailmcp.googleapis.com/mcp/v1',name:'gmail-mcp'}]
+      })
+    });
+    const data=await res.json();
+    const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('').toLowerCase();
+    const ok=txt.includes('sent')||txt.includes('success')||txt.includes('deliver');
+    if(ok){
+      const key=next?next.toISOString().split('T')[0]:'';
+      S.lastSentFor=key;save();
+      statusEl.textContent='Sent! Check your inbox.';
+      toast('t-sent','ok');
+    }else{
+      statusEl.textContent='Gmail may not have sent it — check your inbox.';
+      setEmailError('Gmail response: '+txt.slice(0,300));
+      toast('t-err','err');
+    }
+  }catch(err){
+    statusEl.textContent='Send failed.';
+    setEmailError('Network error: '+err.message);
+    toast('t-err','err');
+  }
+  if(sendBtn)sendBtn.disabled=false;
+}
+
+// Keep autoSendCheck working with internal version
+async function generateAndSend(preview,isMid){
+  // preview=true path now goes through generatePreview()/sendGeneratedEmail()
+  if(preview&&!isMid){generatePreview();return;}
+  // Silent auto-send path
+  if(!S.yourEmail||!S.yourEmail.trim())return;
+  const next=predNext();
+  const ds=next?next.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}):'soon';
+  const ap=activePeriod(),day=ap?periodDay(ap):3;
+  const subj=isMid?'Checking in — day '+day+' of her period':'Heads up: Period predicted '+ds;
+  const prompt=isMid?buildMidPrompt(day):buildPrompt(ds);
+  try{
+    const r1=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:450,messages:[{role:'user',content:prompt}]})});
+    const d1=await r1.json();
+    const body=(d1.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    if(!body)return;
+    const r2=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,
+        messages:[{role:'user',content:'Send email to '+S.yourEmail+' subject: ['+subj+'] body:\n\n'+body+'\n\nUse Gmail.'}],
+        mcp_servers:[{type:'url',url:'https://gmailmcp.googleapis.com/mcp/v1',name:'gmail-mcp'}]})});
+    const d2=await r2.json();
+    const txt=(d2.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('').toLowerCase();
+    if(txt.includes('sent')||txt.includes('success')){
+      const key=next?next.toISOString().split('T')[0]:'';
+      if(isMid)S.lastMidSentFor=key;else S.lastSentFor=key;save();
+    }
+  }catch(e){}
+}
+function getPeopleRemindersToShow(withinDays){
+  const today=new Date();today.setHours(0,0,0,0);
+  const remind=parseInt(S.peopleRemindDays)||2;
+  const results=[];
+  S.people.forEach(person=>{
+    (person.dates||[]).forEach(date=>{
+      const occurrence=nextOccurrenceDate(date.month,date.day);
+      const remindDate=new Date(occurrence);remindDate.setDate(remindDate.getDate()-remind);remindDate.setHours(0,0,0,0);
+      const daysUntilRemind=Math.round((remindDate-today)/86400000);
+      if(daysUntilRemind>=0&&daysUntilRemind<=withinDays){
+        results.push({person,date,occurrence,remindDate,days:daysUntilRemind});
+      }
+    });
+  });
+  return results.sort((a,b)=>a.days-b.days);
+}
+
+function buildPeopleReminderPrompt(person,dateLabel,occurrenceDate){
+  const ds=occurrenceDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const likesList=person.likes&&person.likes.length?person.likes.join(', '):'(none saved)';
+  const notes=person.notes||'';
+  return`You are helping a thoughtful husband remember an important date for someone he cares about.
+
+Person: ${person.name} (${person.rel||'family/friend'})
+Date: ${dateLabel} on ${ds}
+Things they like: ${likesList}
+Notes: ${notes||'(none)'}
+
+Write a short, warm reminder email body (no subject line) that:
+- Opens with a friendly heads-up about the upcoming ${dateLabel}
+- Suggests 2–3 specific, thoughtful gift ideas or gestures based on what they like — not generic, be creative
+- If it's a birthday, suggests something personal and fun
+- Keeps a warm, encouraging tone — like a helpful reminder from a friend
+- Short natural paragraphs, no bullet points or lists
+- Under 150 words
+- Sign off as "The Thoughtful Husband app"`;
+}
+
+async function sendPeopleReminderEmail(person,date,occurrence){
+  const email=S.yourEmail.trim();
+  if(!email)return;
+  const ds=occurrence.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const subj=`Reminder: ${person.name}'s ${date.label} is coming up — ${ds}`;
+  const prompt=buildPeopleReminderPrompt(person,date.label,occurrence);
+  let body='';
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:350,messages:[{role:"user",content:prompt}]})});
+    const data=await res.json();
+    body=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+  }catch(e){return;}
+  if(!body)return;
+  try{
+    await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:400,
+        messages:[{role:"user",content:`Send an email to ${email} with subject: "${subj}" and this exact body:\n\n${body}\n\nUse Gmail. Confirm when sent.`}],
+        mcp_servers:[{type:"url",url:"https://gmailmcp.googleapis.com/mcp/v1",name:"gmail-mcp"}]})});
+  }catch(e){}
+}
+
+async function autoSendCheck(){
+  if(!ready()||!S.yourEmail||!S.yourEmail.trim())return;
+  const next=predNext();if(!next)return;
+  const key=next.toISOString().split('T')[0];
+  const today=new Date();today.setHours(0,0,0,0);
+  const sd=new Date(next);sd.setDate(sd.getDate()-(parseInt(S.remindDays)||1));sd.setHours(0,0,0,0);
+  if(S.lastSentFor!==key&&today.getTime()===sd.getTime())await generateAndSend(false,false);
+  if(S.midPeriodEmail){const ap=activePeriod();if(ap&&S.lastMidSentFor!==key&&periodDay(ap)===3)await generateAndSend(false,true);}
+  // My People date reminders
+  if(S.yourEmail&&S.yourEmail.trim()){
+    const today=new Date();today.setHours(0,0,0,0);
+    const todayKey=today.toISOString().split('T')[0];
+    const remind=parseInt(S.peopleRemindDays)||2;
+    for(const person of S.people){
+      for(const date of (person.dates||[])){
+        const occurrence=nextOccurrenceDate(date.month,date.day);
+        const remindDate=new Date(occurrence);remindDate.setDate(remindDate.getDate()-remind);remindDate.setHours(0,0,0,0);
+        if(remindDate.getTime()===today.getTime()){
+          const sentKey=person.id+'_'+date.label+'_'+occurrence.getFullYear();
+          if(!S.sentPeopleReminders[sentKey]){
+            await sendPeopleReminderEmail(person,date,occurrence);
+            S.sentPeopleReminders[sentKey]=todayKey;
+            save();
+          }
+        }
+      }
+    }
+  }
+}
+
+// History
+let expandedHistId=null;
+function renderHist(){
+  const el=document.getElementById('hlist');
+  if(!S.logs.length){el.innerHTML='<em style="color:var(--muted);font-size:14px;">No periods logged yet.</em>';return;}
+  el.innerHTML=[...S.logs].sort((a,b)=>parseLocalDate(b.start)-parseLocalDate(a.start)).map((l,idx)=>{
+    const sD=parseLocalDate(l.start).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    const eD=l.end?parseLocalDate(l.end).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'not logged';
+    const dur=l.end?Math.round((parseLocalDate(l.end)-parseLocalDate(l.start))/86400000)+1+'d':'ongoing';
+    const cb=l.confirmed?'<span style="font-size:11px;background:var(--green-bg);color:var(--green-text);border:1px solid var(--green-border);border-radius:10px;padding:2px 7px;margin-left:6px;">confirmed</span>':'';
+    const isExp=expandedHistId===l.start;
+    return`<div style="border-bottom:1px solid var(--border);padding:10px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;" onclick="toggleHistEdit('${l.start}')">
+        <div>
+          <div style="font-size:14px;font-weight:500;">${sD} → ${eD}${cb}</div>
+          <div style="font-size:12px;color:var(--muted);">${dur}${l.notes?' · '+l.notes:''}</div>
+        </div>
+        <div style="font-size:18px;color:var(--muted);margin-left:8px;">${isExp?'▲':'▼'}</div>
+      </div>
+      ${isExp?`<div style="margin-top:12px;padding:12px;background:var(--sub);border-radius:10px;">
+        <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Edit dates</div>
+        <label style="font-size:13px;">Start date</label>
+        <input type="date" id="edit-start-${l.start}" value="${l.start}" style="margin-bottom:8px;"/>
+        <label style="font-size:13px;">End date</label>
+        <input type="date" id="edit-end-${l.start}" value="${l.end||''}" style="margin-bottom:8px;"/>
+        <label style="font-size:13px;">Notes</label>
+        <textarea id="edit-notes-${l.start}" style="height:56px;margin-bottom:10px;">${l.notes||''}</textarea>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn sm pk" onclick="saveHistEdit('${l.start}')">Save changes</button>
+          <button class="btn sm" style="color:var(--red-text);border-color:var(--red-border);" onclick="delLog('${l.start}')">Delete</button>
+        </div>
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+function toggleHistEdit(start){
+  expandedHistId=(expandedHistId===start)?null:start;
+  renderHist();
+}
+function saveHistEdit(origStart){
+  const newStart=document.getElementById('edit-start-'+origStart).value;
+  const newEnd=document.getElementById('edit-end-'+origStart).value;
+  const newNotes=document.getElementById('edit-notes-'+origStart).value;
+  if(!newStart){alert('Start date required.');return;}
+  if(newEnd&&newEnd<newStart){alert('End must be on or after start.');return;}
+  const l=S.logs.find(l=>l.start===origStart);
+  if(l){l.start=newStart;l.end=newEnd||'';l.notes=newNotes;save();expandedHistId=newStart;renderHist();renderDB();renderCal();}
+}
+function addEnd(s){const e=prompt('End date (YYYY-MM-DD):');if(!e)return;const l=S.logs.find(l=>l.start===s);if(l){l.end=e;save();renderHist();renderDB();}}
+function delLog(s){if(!confirm('Remove this log entry?'))return;S.logs=S.logs.filter(l=>l.start!==s);save();expandedHistId=null;renderHist();renderDB();renderCal();}
+
+// Settings
+function renderSettings(){
+  document.getElementById('lock-toggle').checked=S.lockEnabled;
+  document.getElementById('pass-fields').style.display=S.lockEnabled?'block':'none';
+}
+function exportData(){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:'application/json'}));
+  a.download='thoughtful_husband_backup_'+new Date().toISOString().split('T')[0]+'.json';
+  a.click();toast('t-export','ok');
+}
+function importData(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{try{S={...S,...JSON.parse(e.target.result)};save();renderDB();renderSettings();toast('t-import','ok');}catch(err){toast('t-imp-err','err');}};
+  r.readAsText(file);ev.target.value='';
+}
+function clearAll(){
+  if(!confirm('Delete ALL data permanently?'))return;
+  if(!confirm('Really? This cannot be undone.'))return;
+  localStorage.removeItem('th1');location.reload();
+}
+
+// Utils
+function toast(id,type){
+  const el=document.getElementById(id);if(!el)return;
+  el.className='toast '+(type||'ok');el.style.display='block';
+  setTimeout(()=>el.style.display='none',3000);
+}
+
+// Init
+load();
+// Migrate old single tampon/coffee fields to arrays
+if(S.tamponBrand||S.tamponSize){
+  if(!S.tampons)S.tampons=[];
+  if(S.tampons.length===0)S.tampons.push({brand:S.tamponBrand||'',size:S.tamponSize||''});
+  delete S.tamponBrand;delete S.tamponSize;
+}
+if(S.coffeeOrder){
+  if(!S.coffeeOrders)S.coffeeOrders=[];
+  if(S.coffeeOrders.length===0&&S.coffeeOrder)S.coffeeOrders.push(S.coffeeOrder);
+  delete S.coffeeOrder;
+}
+if(!S.tampons)S.tampons=[];
+if(!S.coffeeOrders)S.coffeeOrders=[];
+const lsEl=document.getElementById('ls');if(lsEl)lsEl.value=new Date().toISOString().split('T')[0];
+checkLock();
+renderHome();
+renderDB();
+renderCal();
+autoSendCheck();
+window.addEventListener('load',()=>{
+  setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('gone');setTimeout(()=>s.remove(),500);}},1000);
+});
+</script>
+</body>
+</html>
